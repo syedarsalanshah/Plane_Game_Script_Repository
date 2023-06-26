@@ -34,6 +34,7 @@ public class plane_Move : MonoBehaviour
         plane_RB = GetComponent<Rigidbody>();
         transform.rotation = Quaternion.Euler(0, 0, 0);
         smoke_Particle.Stop();
+        White_to_gray.SetFloat("_Metallic", 0f);
     }
     void Update()
     {
@@ -108,6 +109,12 @@ public class plane_Move : MonoBehaviour
             Destroy(other.gameObject);
             
         }
+
+        if (other.gameObject.CompareTag("H.Gem"))
+        {
+            Destroy(other.gameObject);
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -134,6 +141,8 @@ public class plane_Move : MonoBehaviour
             tiltRotate_speed = 0f;
             
         }
+
+
     }
 
 
