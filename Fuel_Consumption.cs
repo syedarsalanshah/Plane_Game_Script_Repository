@@ -38,11 +38,9 @@ public class Fuel_Consumption : MonoBehaviour
     void Update()
     {
         
-        if (barr.rectTransform.localScale.x == 1.0f)
-        {
-            bar_decrease_sequence();
+     
 
-        }
+        
 
 
         if(barr.rectTransform.localScale.x <= 0.5f && barr.rectTransform.localScale.x >= 0.01f)
@@ -93,6 +91,22 @@ public class Fuel_Consumption : MonoBehaviour
         }
 
     }
+    void FixedUpdate()
+    {
+        if (barr.rectTransform.localScale.x == 1.0f)
+        {
+            bar_decrease_sequence();
+
+        }
+        else
+        {
+            if(Planes_Script.fuel_counter == 1)
+            {
+                bar_decrease_sequence();
+            }
+           
+        }
+    }
     IEnumerator timer_for()
     {
         yield return new WaitForSeconds(5f);
@@ -106,7 +120,23 @@ public class Fuel_Consumption : MonoBehaviour
 
     public void bar_decrease_sequence()
     {
-        barr.gameObject.LeanScaleX(0, 10f);
+        float current_leanScale;
+        
+        if(Planes_Script.fuel_counter == 2)
+        {
+            
+
+            current_leanScale = 1 - 0.1f;
+            print("A: " + current_leanScale);
+        }
+        else
+        {
+            current_leanScale = barr.rectTransform.localScale.x - 0.1f;
+            print("B: " + current_leanScale);
+        }
+        
+
+        barr.gameObject.LeanScaleX(current_leanScale, 5f);
     }
 
     public void bar_increase_sequence()

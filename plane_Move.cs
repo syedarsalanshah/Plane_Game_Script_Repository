@@ -26,6 +26,8 @@ public class plane_Move : MonoBehaviour
     public GameObject Consumption;
     private Fuel_Consumption Fuel_taking;
 
+    public int fuel_counter = 1;
+
     //Scoring Section
     public int current_Score = 0;
     public int current_Total_Score = 0;
@@ -116,6 +118,7 @@ public class plane_Move : MonoBehaviour
                 current_Total_Score = current_Score;
                 print("Total score is " + current_Total_Score);
                 gem_Count_repeat_timer = 1;
+             
 
 
             }
@@ -129,6 +132,7 @@ public class plane_Move : MonoBehaviour
             PlayerPrefs.SetInt("HighestScore", Best_Total_Score);
         }
     }
+   
 
 
     private void OnTriggerEnter(Collider other)
@@ -138,6 +142,17 @@ public class plane_Move : MonoBehaviour
             Fuel_taking.bar_increase_sequence();
             StartCoroutine(calling_decrease());
             Destroy(other.gameObject);
+            fuel_counter = 2;
+            StartCoroutine(fuel_counter_timing());
+
+
+        }
+        else
+        {
+            if(fuel_counter == 1)
+            {
+                Fuel_taking.bar_decrease_sequence();
+            }
             
         }
 
@@ -162,6 +177,11 @@ public class plane_Move : MonoBehaviour
 
         }
 
+    }
+    IEnumerator fuel_counter_timing()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        fuel_counter = 1;
     }
 
     private void OnCollisionEnter(Collision collision)
