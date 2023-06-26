@@ -19,6 +19,7 @@ public class plane_Move : MonoBehaviour
     public float moveSpeed = 1f;
     public float sideSpeed = 10f;
     public float translationInput;
+    private float mouseInput;
 
 
     public float boost = 40f;
@@ -82,7 +83,7 @@ public class plane_Move : MonoBehaviour
         }
 
 
-        float mouseInput = Input.GetAxis("Mouse X");
+        mouseInput = Input.GetAxis("Mouse X");
         transform.Rotate(-Vector3.right, mouseInput * rotationSpeed * Time.deltaTime);
 
        /* transform.Translate(Vector3.forward * translationInput * moveSpeed * Time.deltaTime);
@@ -118,12 +119,20 @@ public class plane_Move : MonoBehaviour
             Dust_boom.Play();
             Spark1.Play();
             Spark2.Play();
+            
         }
 
         if (collision.gameObject.CompareTag("Plane"))
         {
            White_to_gray.SetFloat("_Metallic", 1f);
             Fire.Play();
+            moveSpeed = 0f;
+            boost = 0f;
+            rotationSpeed = 0f;
+            mouseInput = 0f;
+            sideSpeed = 0f;
+            tiltRotate_speed = 0f;
+            
         }
     }
 
