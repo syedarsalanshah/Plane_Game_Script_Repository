@@ -141,21 +141,21 @@ public class plane_Move : MonoBehaviour
             
         }
 
-        if (other.gameObject.name == "5 Side Diamond")
+        if (other.gameObject.name.Contains("5 Side Diamond"))
         {
             Destroy(other.gameObject);
             current_Score += 5;
             
         }
 
-        if (other.gameObject.name == "Diamondo")
+        if (other.gameObject.name.Contains("Diamondo"))
         {
             Destroy(other.gameObject);
             current_Score += 3;
             
         }
 
-        if (other.gameObject.name == "SoftStar")
+        if (other.gameObject.name.Contains("SoftStar"))
         {
             Destroy(other.gameObject);
             current_Score += 1;
