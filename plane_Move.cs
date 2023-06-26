@@ -6,7 +6,7 @@ using UnityEngine;
 public class plane_Move : MonoBehaviour
 {
     private Rigidbody plane_RB;
-
+    private bool fall;
     public ParticleSystem smoke_Particle;
     public ParticleSystem Dust_boom;
     public ParticleSystem Spark1;
@@ -50,6 +50,12 @@ public class plane_Move : MonoBehaviour
     }
     void Update()
     {
+
+        if(fall == true)
+        {
+            transform.Translate(Vector3.down * 5 * Time.deltaTime);
+        }
+
         gemCount = GameObject.FindGameObjectsWithTag("Gems").Length;
         if (Time.time < 0.5f)
         {
@@ -194,6 +200,7 @@ public class plane_Move : MonoBehaviour
             Dust_boom.Play();
             Spark1.Play();
             Spark2.Play();
+            fall = true;
             
         }
 

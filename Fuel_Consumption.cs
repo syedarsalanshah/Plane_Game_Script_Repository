@@ -21,6 +21,7 @@ public class Fuel_Consumption : MonoBehaviour
 
     public AudioSource fuel_alaram_tune;
     public AudioSource Crash_tune;
+    public AudioSource Petrol_Filling_tune;
     private int counter_for_fuel_alaram = 1;
 
 
@@ -150,7 +151,14 @@ public class Fuel_Consumption : MonoBehaviour
 
     public void bar_increase_sequence()
     {
+        Petrol_Filling_tune.Play();
+        StartCoroutine(Sound());
         barr.gameObject.LeanScaleX(1, 1f);
+    }
+    IEnumerator Sound()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Petrol_Filling_tune.Stop();
     }
 
 
