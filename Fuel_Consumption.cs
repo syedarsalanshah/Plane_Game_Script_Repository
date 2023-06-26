@@ -22,11 +22,15 @@ public class Fuel_Consumption : MonoBehaviour
     public AudioSource fuel_alaram_tune;
     public AudioSource Crash_tune;
     public AudioSource Petrol_Filling_tune;
+    public AudioSource Plane_Engine_tune;
+
+    public int Plane_value = 0;
     private int counter_for_fuel_alaram = 1;
 
 
     private int decline_of_plane_counter = 1;
-
+    public GameObject Propeller_Object;
+    private propeller_rotation Propeller_Script;
 
     public float Clock_for_fuel;
     // Start is called before the first frame update
@@ -34,7 +38,7 @@ public class Fuel_Consumption : MonoBehaviour
     {
       //  AnimateBar();
         Planes_Script = Plane_as_Object.GetComponent<plane_Move>();
-       
+        Propeller_Script = Propeller_Object.GetComponent<propeller_rotation>();
        bar_decrease_sequence();
         Clock_for_fuel = 1;
     }
@@ -110,6 +114,16 @@ public class Fuel_Consumption : MonoBehaviour
                 bar_decrease_sequence();
             
            
+        }
+
+        if (Propeller_Script.Engine_ON == true)
+        {
+            if(Plane_value == 0)
+            {
+                Plane_Engine_tune.Play();
+                Plane_value = 1;
+            }
+            
         }
     }
     IEnumerator timer_for()
