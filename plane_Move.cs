@@ -125,7 +125,8 @@ public class plane_Move : MonoBehaviour
         if(Best_Total_Score < current_Total_Score)
         {
             Best_Total_Score = current_Total_Score;
-            print("Total score is " + Best_Total_Score);
+            print("Total Best score is " + Best_Total_Score);
+            PlayerPrefs.SetInt("HighestScore", Best_Total_Score);
         }
     }
 
