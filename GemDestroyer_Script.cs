@@ -28,7 +28,7 @@ public class GemDestroyer_Script : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Plane"))
         {
-            print(" triggered gem deleted from gem script");
+            
         }
     }
 }

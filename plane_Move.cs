@@ -26,7 +26,12 @@ public class plane_Move : MonoBehaviour
     public GameObject Consumption;
     private Fuel_Consumption Fuel_taking;
 
-
+    //Scoring Section
+    public int current_Score = 0;
+    public int current_Total_Score = 0;
+    public int Best_Total_Score;
+    private int gemCount;
+    private int gem_Count_repeat_timer = 0;
     private void Start()
     {
         Fuel_taking = Consumption.GetComponent<Fuel_Consumption>();
@@ -35,10 +40,16 @@ public class plane_Move : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, 0);
         smoke_Particle.Stop();
         White_to_gray.SetFloat("_Metallic", 0f);
+
+        gemCount = GameObject.FindGameObjectsWithTag("Gems").Length;
+        Debug.Log("Number of gems: " + gemCount);
+
+        Best_Total_Score = PlayerPrefs.GetInt("HighestScore", 0);
     }
     void Update()
     {
-        if(Time.time < 0.5f)
+        gemCount = GameObject.FindGameObjectsWithTag("Gems").Length;
+        if (Time.time < 0.5f)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
@@ -97,6 +108,25 @@ public class plane_Move : MonoBehaviour
            // print("yes");
            // transform.Translate(Vector3.down *10* Time.deltaTime);
         }
+
+        if (gemCount == 0)
+        {        
+            if (gem_Count_repeat_timer == 0)
+            {
+                current_Total_Score = current_Score;
+                print("Total score is " + current_Total_Score);
+                gem_Count_repeat_timer = 1;
+
+
+            }
+        }
+
+
+        if(Best_Total_Score < current_Total_Score)
+        {
+            Best_Total_Score = current_Total_Score;
+            print("Total score is " + Best_Total_Score);
+        }
     }
 
 
@@ -110,9 +140,25 @@ public class plane_Move : MonoBehaviour
             
         }
 
-        if (other.gameObject.CompareTag("H.Gem"))
+        if (other.gameObject.name == "5 Side Diamond")
         {
             Destroy(other.gameObject);
+            current_Score += 5;
+            
+        }
+
+        if (other.gameObject.name == "Diamondo")
+        {
+            Destroy(other.gameObject);
+            current_Score += 3;
+            
+        }
+
+        if (other.gameObject.name == "SoftStar")
+        {
+            Destroy(other.gameObject);
+            current_Score += 1;
+
         }
 
     }
