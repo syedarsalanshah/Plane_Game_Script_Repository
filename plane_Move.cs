@@ -19,7 +19,7 @@ public class plane_Move : MonoBehaviour
     public float moveSpeed = 1f;
     public float sideSpeed = 10f;
     public float translationInput;
-    private float mouseInput;
+    public float mouseInput;
 
 
     public float boost = 40f;
@@ -102,6 +102,7 @@ public class plane_Move : MonoBehaviour
 
        /* transform.Translate(Vector3.forward * translationInput * moveSpeed * Time.deltaTime);
         transform.Translate(Vector3.right * sideSpeed * Time.deltaTime);*/
+       
        transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
 
 

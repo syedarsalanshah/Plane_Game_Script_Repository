@@ -25,6 +25,9 @@ public class Fuel_Consumption : MonoBehaviour
 
 
     private int decline_of_plane_counter = 1;
+
+
+    public float Clock_for_fuel;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,7 @@ public class Fuel_Consumption : MonoBehaviour
         Planes_Script = Plane_as_Object.GetComponent<plane_Move>();
        
        bar_decrease_sequence();
+        Clock_for_fuel = 1;
     }
 
     // Update is called once per frame
@@ -93,17 +97,17 @@ public class Fuel_Consumption : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (barr.rectTransform.localScale.x == 1.0f)
+        if (/*barr.rectTransform.localScale.x*/ Clock_for_fuel== 1.0f)
         {
             bar_decrease_sequence();
 
         }
         else
         {
-            if(Planes_Script.fuel_counter == 1)
-            {
+          
+            
                 bar_decrease_sequence();
-            }
+            
            
         }
     }
@@ -121,19 +125,24 @@ public class Fuel_Consumption : MonoBehaviour
     public void bar_decrease_sequence()
     {
         float current_leanScale;
-        
-        if(Planes_Script.fuel_counter == 2)
-        {
-            
 
-            current_leanScale = 1 - 0.1f;
-            print("A: " + current_leanScale);
+        if (!(Planes_Script.fuel_counter == 1))
+        {
+
+            current_leanScale = Clock_for_fuel - 0.1f;
+            print(current_leanScale);
+
         }
         else
         {
-            current_leanScale = barr.rectTransform.localScale.x - 0.1f;
-            print("B: " + current_leanScale);
+            Clock_for_fuel = 1.0f;
+            current_leanScale = Clock_for_fuel;
         }
+      
+     
+        
+        
+        
         
 
         barr.gameObject.LeanScaleX(current_leanScale, 5f);
