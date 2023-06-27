@@ -27,6 +27,7 @@ public class plane_Move : MonoBehaviour
     private Fuel_Consumption Fuel_taking;
 
     public int fuel_counter = 1;
+    private int Plane_Blast_Couter = 0;
 
     //Scoring Section
     public int current_Score = 0;
@@ -214,6 +215,14 @@ public class plane_Move : MonoBehaviour
             mouseInput = 0f;
             sideSpeed = 0f;
             tiltRotate_speed = 0f;
+
+            if(Plane_Blast_Couter == 0)
+            {
+                Fuel_taking.Plane_Blast.Play();
+                Fuel_taking.Plane_Engine_tune.Stop();
+                Plane_Blast_Couter = 1;
+            }
+           
             
         }
 

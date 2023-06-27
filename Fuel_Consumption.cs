@@ -23,6 +23,7 @@ public class Fuel_Consumption : MonoBehaviour
     public AudioSource Crash_tune;
     public AudioSource Petrol_Filling_tune;
     public AudioSource Plane_Engine_tune;
+    public AudioSource Plane_Blast;
 
     public int Plane_value = 0;
     private int counter_for_fuel_alaram = 1;
