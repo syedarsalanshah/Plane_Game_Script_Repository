@@ -12,6 +12,8 @@ public class propeller_rotation : MonoBehaviour
 
     public GameObject Plane_as_Object;
     private plane_Move Planes_Script_for_flying;
+
+
     void Start()
     {
         Planes_Script_for_flying = Plane_as_Object.GetComponent<plane_Move>();

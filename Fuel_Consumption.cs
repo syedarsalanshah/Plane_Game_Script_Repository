@@ -8,10 +8,9 @@ using Unity.VisualScripting;
 
 public class Fuel_Consumption : MonoBehaviour
 {
-    
-    public GameObject bar;
+  
     public int Timer;
-    public Image barr;
+    public GameObject barr;
     public int val;
     public int value_of_fuel_zero = 1;
 
@@ -44,10 +43,14 @@ public class Fuel_Consumption : MonoBehaviour
       //  AnimateBar();
         Planes_Script = Plane_as_Object.GetComponent<plane_Move>();
         Propeller_Script = Propeller_Object.GetComponent<propeller_rotation>();
-        bool_of_fuel_to_Allow=false;
+        /*bool_of_fuel_to_Allow=false;
         bar_decrease_sequence();
         Clock_for_fuel = 1;
-        time_timer = 5.0f;
+        time_timer = 5.0f;*/
+        InvokeRepeating("bar_increase_sequence", 1.0f, 1.0f);
+
+
+        InvokeRepeating("bar_decrease_sequence", 1.0f, 3.0f);
     }
 
     // Update is called once per frame
@@ -56,7 +59,7 @@ public class Fuel_Consumption : MonoBehaviour
         
 
 
-        if (barr.rectTransform.localScale.x <= 0.5f && barr.rectTransform.localScale.x >= 0.01f)
+        if (barr.gameObject.transform.localScale.x <= 0.5f && barr.gameObject.transform.localScale.x >= 0.01f)
         {
 
             if(counter_for_fuel_alaram == 1)
@@ -77,7 +80,7 @@ public class Fuel_Consumption : MonoBehaviour
         }
 
 
-        if (barr.rectTransform.localScale.x <= 0.35f && barr.rectTransform.localScale.x >= 0.001f)
+        if ((barr.gameObject.transform.localScale.x <= 0.35f) && (barr.gameObject.transform.localScale.x >= 0.001f))
         {
             if (decline_of_plane_counter == 1)
             {
@@ -104,7 +107,7 @@ public class Fuel_Consumption : MonoBehaviour
     {
         if(Time.time == time_timer)
         {
-            print(barr.rectTransform.localScale.x);
+            print(barr.gameObject.transform.localScale.x);
             time_timer = Time.time+5.0f;
             print(time_timer);
         }
@@ -132,56 +135,76 @@ public class Fuel_Consumption : MonoBehaviour
     IEnumerator timer_for()
     {
         yield return new WaitForSeconds(5f);
-        bar_decrease_sequence();
+       /* bar_decrease_sequence();*/
         
     }
 
 
 
-    public void bar_decrease_sequence()
+   /* public void bar_decrease_sequence()
     {
-        
 
-      if(bool_of_fuel_to_Allow == true)
-        {
-            current_leanScale = 1.0f;
-            barr.gameObject.LeanScaleX(1.0f, 2f);
-            StartCoroutine(Bool_true_convertingto_false());
-        }
-        else
-        {
-            current_leanScale = current_leanScale - 0.1f ;
-            barr.gameObject.LeanScaleX(current_leanScale, 5f);
-        }
+        *//*
+              if(bool_of_fuel_to_Allow == true)
+                {
+                    current_leanScale = 1.0f;
+                    barr.gameObject.LeanScaleX(1.0f, 2f);
+                    
+                }
+                else
+                {
+                    current_leanScale = current_leanScale - 0.1f ;
+                    barr.gameObject.LeanScaleX(current_leanScale, 5f);
+                }
 
-        if (bool_of_fuel_to_Allow == false)
+                if (bool_of_fuel_to_Allow == false)
+                {
+                    if(barr.rectTransform.localScale.x <= 0.0)
+                    {
+                        barr.gameObject.LeanScaleX(0.0f, 2f);
+
+                    }
+
+
+
+                }
+        *//*
+        if (!(barr.gameObject.transform.localScale.x <= 0))
         {
-            if(barr.rectTransform.localScale.x <= 0.0)
+
+
+            if (bool_of_fuel_to_Allow == false)
             {
-                barr.gameObject.LeanScaleX(0.0f, 2f);
-                
+                barr.gameObject.LeanScaleX(barr.gameObject.transform.localScale.x - 0.1f, 3);
+
+                if (barr.gameObject.transform.localScale.x <= 0)
+                {
+                    barr.gameObject.LeanScaleX(0, 1);
+                }
             }
-            
-           
-            
         }
 
 
 
-
-    }
+    }*/
     IEnumerator Bool_true_convertingto_false()
     {
         yield return new WaitForSecondsRealtime(2.0f);
         bool_of_fuel_to_Allow = true;
     }
 
-    public void bar_increase_sequence()
+   /* public void bar_increase_sequence()
     {
+        StartCoroutine(Bool_true_convertingto_false());
         Petrol_Filling_tune.Play();
         StartCoroutine(Sound());
-        barr.gameObject.LeanScaleX(1, 1f);
-    }
+        *//*barr.gameObject.LeanScaleX(1, 1f);*//*
+        if ( bool_of_fuel_to_Allow == true)
+            
+        {
+            barr.gameObject.LeanScaleX(1, 1);
+        }
+    }*/
     IEnumerator Sound()
     {
         yield return new WaitForSeconds(1.0f);

@@ -35,9 +35,11 @@ public class plane_Move : MonoBehaviour
     public int Best_Total_Score;
     private int gemCount;
     private int gem_Count_repeat_timer = 0;
+    private Checking_Script Plane_Fuel_Slider;
     private void Start()
     {
         Fuel_taking = Consumption.GetComponent<Fuel_Consumption>();
+        Plane_Fuel_Slider = Consumption.GetComponent<Checking_Script>();
         
         plane_RB = GetComponent<Rigidbody>();
         transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -147,9 +149,10 @@ public class plane_Move : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Fuel"))
         {
-            Fuel_taking.bool_of_fuel_to_Allow = true;
-            Fuel_taking.bar_decrease_sequence();
+            /* Fuel_taking.bool_of_fuel_to_Allow = true;
+             */
             /*StartCoroutine(calling_decrease());*/
+            Plane_Fuel_Slider.Checking = true;
             Destroy(other.gameObject);
             fuel_counter = 2;
             StartCoroutine(fuel_counter_timing());
