@@ -14,7 +14,10 @@ public class Fuel_Consumption : MonoBehaviour
     public Image barr;
     public int val;
     public int value_of_fuel_zero = 1;
-    public bool bool_of_fuel_zero = false;
+
+    public bool bool_of_fuel_to_Allow = false;
+    private float current_leanScale = 1;
+
     public GameObject Plane_as_Object;
     private plane_Move Planes_Script;
 
@@ -27,6 +30,7 @@ public class Fuel_Consumption : MonoBehaviour
 
     public int Plane_value = 0;
     private int counter_for_fuel_alaram = 1;
+    public float time_timer;
 
 
     private int decline_of_plane_counter = 1;
@@ -40,20 +44,19 @@ public class Fuel_Consumption : MonoBehaviour
       //  AnimateBar();
         Planes_Script = Plane_as_Object.GetComponent<plane_Move>();
         Propeller_Script = Propeller_Object.GetComponent<propeller_rotation>();
-       bar_decrease_sequence();
+        bool_of_fuel_to_Allow=false;
+        bar_decrease_sequence();
         Clock_for_fuel = 1;
+        time_timer = 5.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-     
-
-        
 
 
-        if(barr.rectTransform.localScale.x <= 0.5f && barr.rectTransform.localScale.x >= 0.01f)
+        if (barr.rectTransform.localScale.x <= 0.5f && barr.rectTransform.localScale.x >= 0.01f)
         {
 
             if(counter_for_fuel_alaram == 1)
@@ -94,27 +97,26 @@ public class Fuel_Consumption : MonoBehaviour
 
         }
 
-        if (barr.rectTransform.localScale.x <= 0)
-
-        {
-            value_of_fuel_zero = 0;
-        }
+        
 
     }
     void FixedUpdate()
     {
-        if (/*barr.rectTransform.localScale.x*/ Clock_for_fuel== 1.0f)
+        if(Time.time == time_timer)
         {
-            bar_decrease_sequence();
-
+            print(barr.rectTransform.localScale.x);
+            time_timer = Time.time+5.0f;
+            print(time_timer);
         }
-        else
+        
+
+
+
+
+        if (bool_of_fuel_to_Allow == false)
         {
-          
-            
-                bar_decrease_sequence();
-            
-           
+
+            StartCoroutine(timer_for());
         }
 
         if (Propeller_Script.Engine_ON == true)
@@ -130,38 +132,48 @@ public class Fuel_Consumption : MonoBehaviour
     IEnumerator timer_for()
     {
         yield return new WaitForSeconds(5f);
-        barr.gameObject.LeanRotateX(1, 0.5f);
+        bar_decrease_sequence();
+        
     }
 
-    void AnimateBar()
-    {
-        LeanTween.scaleX(bar, 0, Timer);
-    }
+
 
     public void bar_decrease_sequence()
     {
-        float current_leanScale;
+        
 
-        if (!(Planes_Script.fuel_counter == 1))
+      if(bool_of_fuel_to_Allow == true)
         {
-
-            current_leanScale = Clock_for_fuel - 0.1f;
-            print(current_leanScale);
-
+            current_leanScale = 1.0f;
+            barr.gameObject.LeanScaleX(1.0f, 2f);
+            StartCoroutine(Bool_true_convertingto_false());
         }
         else
         {
-            Clock_for_fuel = 1.0f;
-            current_leanScale = Clock_for_fuel;
+            current_leanScale = current_leanScale - 0.1f ;
+            barr.gameObject.LeanScaleX(current_leanScale, 5f);
         }
-      
-     
-        
-        
-        
-        
 
-        barr.gameObject.LeanScaleX(current_leanScale, 5f);
+        if (bool_of_fuel_to_Allow == false)
+        {
+            if(barr.rectTransform.localScale.x <= 0.0)
+            {
+                barr.gameObject.LeanScaleX(0.0f, 2f);
+                
+            }
+            
+           
+            
+        }
+
+
+
+
+    }
+    IEnumerator Bool_true_convertingto_false()
+    {
+        yield return new WaitForSecondsRealtime(2.0f);
+        bool_of_fuel_to_Allow = true;
     }
 
     public void bar_increase_sequence()

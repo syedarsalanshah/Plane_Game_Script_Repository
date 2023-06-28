@@ -147,22 +147,16 @@ public class plane_Move : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Fuel"))
         {
-            Fuel_taking.bar_increase_sequence();
-            StartCoroutine(calling_decrease());
+            Fuel_taking.bool_of_fuel_to_Allow = true;
+            Fuel_taking.bar_decrease_sequence();
+            /*StartCoroutine(calling_decrease());*/
             Destroy(other.gameObject);
             fuel_counter = 2;
             StartCoroutine(fuel_counter_timing());
 
 
         }
-        else
-        {
-            if(fuel_counter == 1)
-            {
-                Fuel_taking.bar_decrease_sequence();
-            }
-            
-        }
+       
 
         if (other.gameObject.name.Contains("5 Side Diamond"))
         {
@@ -231,11 +225,13 @@ public class plane_Move : MonoBehaviour
 
 
 
-    IEnumerator calling_decrease()
+ /*   IEnumerator calling_decrease()
     {
         yield return new WaitForSecondsRealtime(1f);
+        Fuel_taking.bool_of_fuel_to_Allow = false;
         Fuel_taking.bar_decrease_sequence();
-    }
+       
+    }*/
 
 
     IEnumerator stop_rotation()
