@@ -22,6 +22,8 @@ public class plane_Move : MonoBehaviour
     public float mouseInput;
 
 
+    public bool isPlanecrashed = false;
+
     public float boost = 40f;
     public GameObject Consumption;
     private Fuel_Consumption Fuel_taking;
@@ -212,7 +214,7 @@ public class plane_Move : MonoBehaviour
             mouseInput = 0f;
             sideSpeed = 0f;
             tiltRotate_speed = 0f;
-
+            isPlanecrashed = true;
             if(Plane_Blast_Couter == 0)
             {
                 Fuel_taking.Plane_Blast.Play();
