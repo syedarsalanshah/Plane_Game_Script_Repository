@@ -12,6 +12,10 @@ public class plane_Move : MonoBehaviour
     public ParticleSystem Spark1;
     public ParticleSystem Spark2;
     public ParticleSystem Fire;
+    public ParticleSystem F1;
+    public ParticleSystem F2;
+    public ParticleSystem F3;
+
 
     public Material White_to_gray;
     public float rotationSpeed = 100f;
@@ -37,11 +41,15 @@ public class plane_Move : MonoBehaviour
     public int Best_Total_Score;
     private int gemCount;
     private int gem_Count_repeat_timer = 0;
+
+    public GameObject Score_gameobject;
+    private ScorePrototype Score_Script;
     private Checking_Script Plane_Fuel_Slider;
     private void Start()
     {
         Fuel_taking = Consumption.GetComponent<Fuel_Consumption>();
         Plane_Fuel_Slider = Consumption.GetComponent<Checking_Script>();
+        Score_Script = Score_gameobject.GetComponent<ScorePrototype>();
         
         plane_RB = GetComponent<Rigidbody>();
         transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -167,6 +175,8 @@ public class plane_Move : MonoBehaviour
         {
             Destroy(other.gameObject);
             current_Score += 5;
+            Score_Script.Diamond_fun(1);
+           
             
         }
 
@@ -174,13 +184,15 @@ public class plane_Move : MonoBehaviour
         {
             Destroy(other.gameObject);
             current_Score += 3;
-            
+            Score_Script.Emberled_fun(1);
+
         }
 
         if (other.gameObject.name.Contains("SoftStar"))
         {
             Destroy(other.gameObject);
             current_Score += 1;
+            Score_Script.Start_fun(1);
 
         }
 
@@ -208,6 +220,9 @@ public class plane_Move : MonoBehaviour
         {
            White_to_gray.SetFloat("_Metallic", 1f);
             Fire.Play();
+            F1.Play();
+            F2.Play();
+            F3.Play();
             moveSpeed = 0f;
             boost = 0f;
             rotationSpeed = 0f;
