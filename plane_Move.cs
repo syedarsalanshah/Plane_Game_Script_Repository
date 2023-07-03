@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class plane_Move : MonoBehaviour
@@ -15,7 +16,7 @@ public class plane_Move : MonoBehaviour
     public ParticleSystem F1;
     public ParticleSystem F2;
     public ParticleSystem F3;
-
+    private int Fire_counter = 0;
 
     public Material White_to_gray;
     public float rotationSpeed = 100f;
@@ -37,6 +38,7 @@ public class plane_Move : MonoBehaviour
 
     //Scoring Section
     public int current_Score = 0;
+    public Text Current_Score_text;
     public int current_Total_Score = 0;
     public int Best_Total_Score;
     private int gemCount;
@@ -72,7 +74,7 @@ public class plane_Move : MonoBehaviour
         gemCount = GameObject.FindGameObjectsWithTag("Gems").Length;
         if (Time.time < 0.5f)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 90, 0);
         }
         translationInput = Input.GetAxis("Vertical");
 
@@ -196,6 +198,8 @@ public class plane_Move : MonoBehaviour
 
         }
 
+        Current_Score_text.text = current_Score.ToString();
+
     }
     IEnumerator fuel_counter_timing()
     {
@@ -220,9 +224,15 @@ public class plane_Move : MonoBehaviour
         {
            White_to_gray.SetFloat("_Metallic", 1f);
             Fire.Play();
-            F1.Play();
-            F2.Play();
-            F3.Play();
+            if(Fire_counter == 0)
+            {
+                F1.Play();
+                F2.Play();
+                F3.Play();
+                Fire_counter = 1;
+
+            }
+           
             moveSpeed = 0f;
             boost = 0f;
             rotationSpeed = 0f;

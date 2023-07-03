@@ -107,7 +107,7 @@ public class Fuel_Consumption : MonoBehaviour
     {
         if(Time.time == time_timer)
         {
-            print(barr.gameObject.transform.localScale.x);
+          
             time_timer = Time.time+5.0f;
             print(time_timer);
         }
