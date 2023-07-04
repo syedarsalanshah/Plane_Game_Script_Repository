@@ -51,7 +51,7 @@ public class propeller_rotation : MonoBehaviour
                     Planes_Script_for_flying.rotationSpeed = 100f;
                     Planes_Script_for_flying.tiltRotate_speed = 50f;
                     Planes_Script_for_flying.moveSpeed = 15f;
-                    Planes_Script_for_flying.sideSpeed = 10f;
+                    Planes_Script_for_flying.sideSpeed = 14f;
                 /*Planes_Script_for_flying.translationInput ;*/
                 /* Planes_Script_for_flying.mouseInput = 0;*/
                     fall_zero = false;
