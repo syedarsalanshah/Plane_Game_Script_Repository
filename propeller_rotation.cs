@@ -17,10 +17,14 @@ public class propeller_rotation : MonoBehaviour
     public GameObject Plane_as_Object;
     private plane_Move Planes_Script_for_flying;
 
+    public GameObject Camera_as_Object;
+    private Fuel_Consumption Fuel_Script_for_Sound;
 
     void Start()
     {
         Planes_Script_for_flying = Plane_as_Object.GetComponent<plane_Move>();
+
+        Fuel_Script_for_Sound = Camera_as_Object.GetComponent <Fuel_Consumption>();
     }
 
     // Update is called once per frame
@@ -40,9 +44,10 @@ public class propeller_rotation : MonoBehaviour
             
             if (Input.GetKeyUp(KeyCode.Space))
             {
-                
 
 
+
+                Fuel_Script_for_Sound.Plane_Engine_tune.volume = 1.0f;
                     Planes_Script_for_flying.rotationSpeed = 100f;
                     Planes_Script_for_flying.tiltRotate_speed = 50f;
                     Planes_Script_for_flying.moveSpeed = 15f;
@@ -63,6 +68,7 @@ public class propeller_rotation : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.R))
             {
+                Fuel_Script_for_Sound.Plane_Engine_tune.volume = 0.6f;
                 Planes_Script_for_flying.rotationSpeed = 50f;
                 Planes_Script_for_flying.tiltRotate_speed = 25f;
                 Planes_Script_for_flying.moveSpeed = 5f;
@@ -79,6 +85,7 @@ public class propeller_rotation : MonoBehaviour
                 Planes_Script_for_flying.gameObject.transform.Translate(Vector3.down * 3 * Time.deltaTime);
                 if (Input.GetKeyUp(KeyCode.E))
                 {
+                    Fuel_Script_for_Sound.Plane_Engine_tune.volume = 0.0f;
                     Planes_Script_for_flying.rotationSpeed = 0f;
                     Planes_Script_for_flying.tiltRotate_speed = 0f;
                     Planes_Script_for_flying.moveSpeed = 0f;

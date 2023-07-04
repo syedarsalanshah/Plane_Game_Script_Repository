@@ -47,10 +47,10 @@ public class Fuel_Consumption : MonoBehaviour
         bar_decrease_sequence();
         Clock_for_fuel = 1;
         time_timer = 5.0f;*/
-        InvokeRepeating("bar_increase_sequence", 1.0f, 1.0f);
+    /*    InvokeRepeating("bar_increase_sequence", 1.0f, 1.0f);
 
 
-        InvokeRepeating("bar_decrease_sequence", 1.0f, 3.0f);
+        InvokeRepeating("bar_decrease_sequence", 1.0f, 3.0f);*/
     }
 
     // Update is called once per frame
@@ -98,9 +98,11 @@ public class Fuel_Consumption : MonoBehaviour
 
             Planes_Script.gameObject.transform.Rotate(-(Vector3.forward) * 15  * Time.deltaTime);
 
-        }
+            
 
+        }
         
+
 
     }
     void FixedUpdate()
@@ -111,7 +113,11 @@ public class Fuel_Consumption : MonoBehaviour
             time_timer = Time.time+5.0f;
             print(time_timer);
         }
-        
+
+        if(barr.gameObject.transform.localScale.x == 0.0)
+          {
+              print("GameOver");
+          }
 
 
 
