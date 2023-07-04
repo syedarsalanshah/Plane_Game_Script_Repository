@@ -44,6 +44,9 @@ public class plane_Move : MonoBehaviour
     private int gemCount;
     private int gem_Count_repeat_timer = 0;
 
+
+    public GameObject Propeller_Gameobject;
+    private propeller_rotation Propeller_Script;
     public GameObject Score_gameobject;
     private ScorePrototype Score_Script;
     private Checking_Script Plane_Fuel_Slider;
@@ -52,7 +55,8 @@ public class plane_Move : MonoBehaviour
         Fuel_taking = Consumption.GetComponent<Fuel_Consumption>();
         Plane_Fuel_Slider = Consumption.GetComponent<Checking_Script>();
         Score_Script = Score_gameobject.GetComponent<ScorePrototype>();
-        
+        Propeller_Script = Propeller_Gameobject.GetComponent<propeller_rotation>();
+
         plane_RB = GetComponent<Rigidbody>();
         transform.rotation = Quaternion.Euler(0, 0, 0);
         smoke_Particle.Stop();
@@ -198,6 +202,8 @@ public class plane_Move : MonoBehaviour
 
         }
 
+        
+
         Current_Score_text.text = current_Score.ToString();
 
     }
@@ -250,7 +256,19 @@ public class plane_Move : MonoBehaviour
             
         }
 
+        if (collision.gameObject.CompareTag("savor"))
+        {
+            print("gamefinished");
+            Propeller_Script.fall_zero = false;
+            rotationSpeed = 0f;
+            tiltRotate_speed = 0f;
+            moveSpeed = 0f;
+            sideSpeed = 0f;
+            /*  Planes_Script_for_flying.translationInput = 0;*/
+            /* Planes_Script_for_flying.mouseInput = 0;*/
+            Propeller_Script.propeller_value = 0;
 
+        }
     }
 
 
