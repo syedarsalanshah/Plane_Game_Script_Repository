@@ -58,7 +58,7 @@ public class plane_Move : MonoBehaviour
         Propeller_Script = Propeller_Gameobject.GetComponent<propeller_rotation>();
 
         plane_RB = GetComponent<Rigidbody>();
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.rotation = Quaternion.Euler(0, 90, 0);
         smoke_Particle.Stop();
         White_to_gray.SetFloat("_Metallic", 0f);
 
@@ -76,6 +76,7 @@ public class plane_Move : MonoBehaviour
         }
 
         gemCount = GameObject.FindGameObjectsWithTag("Gems").Length;
+
         if (Time.time < 0.5f)
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);

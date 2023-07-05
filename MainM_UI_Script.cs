@@ -16,20 +16,18 @@ public class MainM_UI_Script : MonoBehaviour
         
     }
 
-    void Play()
+    public void Play()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    void Options()
+    
+    public void Quit()
     {
 
-    }
-    void Controls()
-    {
+        /*Application.Quit();*/
+        print("Quit");
 
     }
-    void Quit()
-    {
-        Application.Quit();
-    }
+    
+    
 }
