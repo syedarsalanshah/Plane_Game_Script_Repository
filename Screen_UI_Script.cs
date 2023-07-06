@@ -41,18 +41,34 @@ public class Screen_UI_Script : MonoBehaviour
             Fuel_Script.Plane_Engine_tune.Pause();
         }
 
-       
+        if(Pause_Menu.gameObject.activeSelf || Winner_Menu.gameObject.activeSelf || Loser_Menu.gameObject.activeSelf)
+        {
+            Fuel_Script.fuel_alaram_tune.Pause();
+            Fuel_Script.Crash_tune.Pause();
+            Fuel_Script.Petrol_Filling_tune.Pause();
+            Fuel_Script.Plane_Engine_tune.Pause();
+            Fuel_Script.Plane_Blast.Pause();
+        }
 
+        if (Fuel_Script.barr.gameObject.transform.localScale.x <= 0.0f)
+        {
+            Loser_Menu_Function();
+        }
 
     }
     public void Pause_menu()
     {
+        
 
         Pause_Menu.gameObject.SetActive(true);
         Time.timeScale = 0.0f;
     }
     public void Resume_menu()
     {
+        Fuel_Script.fuel_alaram_tune.UnPause();
+        Fuel_Script.Crash_tune.UnPause();
+        Fuel_Script.Plane_Engine_tune.UnPause();
+        Fuel_Script.Plane_Blast.UnPause();
         Fuel_Script.Plane_Engine_tune.Play();
         Time.timeScale = 1.0f;
         Pause_Menu.gameObject.SetActive(false);
@@ -65,6 +81,7 @@ public class Screen_UI_Script : MonoBehaviour
 
     public void Winner_Menu_Function()
     {
+       
         Time.timeScale = 0.0f;
         Winner_Menu.gameObject.SetActive(true);
 
@@ -74,6 +91,7 @@ public class Screen_UI_Script : MonoBehaviour
 
     public void Loser_Menu_Function()
     {
+        
         Time.timeScale = 0.0f;
         Loser_Menu.gameObject.SetActive(true);
 

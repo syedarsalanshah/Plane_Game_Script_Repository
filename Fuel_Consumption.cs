@@ -56,8 +56,9 @@ public class Fuel_Consumption : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
+       
+        
 
         if (barr.gameObject.transform.localScale.x <= 0.5f && barr.gameObject.transform.localScale.x >= 0.01f)
         {
