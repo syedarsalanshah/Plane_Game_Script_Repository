@@ -44,7 +44,8 @@ public class plane_Move : MonoBehaviour
     private int gemCount;
     private int gem_Count_repeat_timer = 0;
 
-
+    public GameObject Screen_UI_Object;
+    private Screen_UI_Script Main_Screen_UI_Script;
     public GameObject Propeller_Gameobject;
     private propeller_rotation Propeller_Script;
     public GameObject Score_gameobject;
@@ -56,6 +57,7 @@ public class plane_Move : MonoBehaviour
         Plane_Fuel_Slider = Consumption.GetComponent<Checking_Script>();
         Score_Script = Score_gameobject.GetComponent<ScorePrototype>();
         Propeller_Script = Propeller_Gameobject.GetComponent<propeller_rotation>();
+        Main_Screen_UI_Script = Screen_UI_Object.GetComponent<Screen_UI_Script>();
 
         plane_RB = GetComponent<Rigidbody>();
         transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -152,9 +154,9 @@ public class plane_Move : MonoBehaviour
         }
 
 
-        if(Best_Total_Score < current_Total_Score)
+        if(Best_Total_Score < current_Score)
         {
-            Best_Total_Score = current_Total_Score;
+            Best_Total_Score = current_Score;
             print("Total Best score is " + Best_Total_Score);
             PlayerPrefs.SetInt("HighestScore", Best_Total_Score);
         }
@@ -181,7 +183,7 @@ public class plane_Move : MonoBehaviour
         if (other.gameObject.name.Contains("5 Side Diamond"))
         {
             Destroy(other.gameObject);
-            current_Score += 5;
+            current_Score += 50;
             Score_Script.Diamond_fun(1);
            
             
@@ -190,7 +192,7 @@ public class plane_Move : MonoBehaviour
         if (other.gameObject.name.Contains("Diamondo"))
         {
             Destroy(other.gameObject);
-            current_Score += 3;
+            current_Score += 30;
             Score_Script.Emberled_fun(1);
 
         }
@@ -198,7 +200,7 @@ public class plane_Move : MonoBehaviour
         if (other.gameObject.name.Contains("SoftStar"))
         {
             Destroy(other.gameObject);
-            current_Score += 1;
+            current_Score += 10;
             Score_Script.Start_fun(1);
 
         }
@@ -218,20 +220,20 @@ public class plane_Move : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
-          
+
             smoke_Particle.Play();
             Dust_boom.Play();
             Spark1.Play();
             Spark2.Play();
             fall = true;
-            
+
         }
 
         if (collision.gameObject.CompareTag("Plane"))
         {
-           White_to_gray.SetFloat("_Metallic", 1f);
+            White_to_gray.SetFloat("_Metallic", 1f);
             Fire.Play();
-            if(Fire_counter == 0)
+            if (Fire_counter == 0)
             {
                 F1.Play();
                 F2.Play();
@@ -239,7 +241,7 @@ public class plane_Move : MonoBehaviour
                 Fire_counter = 1;
 
             }
-           
+
             moveSpeed = 0f;
             boost = 0f;
             rotationSpeed = 0f;
@@ -247,14 +249,15 @@ public class plane_Move : MonoBehaviour
             sideSpeed = 0f;
             tiltRotate_speed = 0f;
             isPlanecrashed = true;
-            if(Plane_Blast_Couter == 0)
+            if (Plane_Blast_Couter == 0)
             {
                 Fuel_taking.Plane_Blast.Play();
                 Fuel_taking.Plane_Engine_tune.Stop();
                 Plane_Blast_Couter = 1;
             }
-           
-            
+
+            StartCoroutine(CallingLoserFunction());
+
         }
 
         if (collision.gameObject.CompareTag("savor"))
@@ -270,6 +273,21 @@ public class plane_Move : MonoBehaviour
             Propeller_Script.propeller_value = 0;
 
         }
+
+        if (collision.gameObject.CompareTag("savor") && current_Score >= 100)
+        {
+            Main_Screen_UI_Script.Winner_Menu_Function();
+        }
+
+        if (collision.gameObject.CompareTag("savor") && current_Score < 100)
+        {
+            Main_Screen_UI_Script.Loser_Menu_Function();
+        }
+    }
+    IEnumerator CallingLoserFunction()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        Main_Screen_UI_Script.Loser_Menu_Function();
     }
 
 
