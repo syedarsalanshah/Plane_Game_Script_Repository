@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class plane_Move : MonoBehaviour
 {
-    private Rigidbody plane_RB;
+    public Rigidbody plane_RB;
     private bool fall;
     public ParticleSystem smoke_Particle;
     public ParticleSystem Dust_boom;
@@ -17,6 +17,8 @@ public class plane_Move : MonoBehaviour
     public ParticleSystem F2;
     public ParticleSystem F3;
     private int Fire_counter = 0;
+    public bool indicating_propeller_tocollisionwithpillars = false;
+
 
     public Material White_to_gray;
     public float rotationSpeed = 100f;
@@ -44,6 +46,7 @@ public class plane_Move : MonoBehaviour
     private int gemCount;
     private int gem_Count_repeat_timer = 0;
 
+   
     public GameObject Screen_UI_Object;
     private Screen_UI_Script Main_Screen_UI_Script;
     public GameObject Propeller_Gameobject;
@@ -59,7 +62,7 @@ public class plane_Move : MonoBehaviour
         Propeller_Script = Propeller_Gameobject.GetComponent<propeller_rotation>();
         Main_Screen_UI_Script = Screen_UI_Object.GetComponent<Screen_UI_Script>();
 
-        plane_RB = GetComponent<Rigidbody>();
+       /* plane_RB = GetComponent<Rigidbody>();*/
         transform.rotation = Quaternion.Euler(0, 90, 0);
         smoke_Particle.Stop();
         White_to_gray.SetFloat("_Metallic", 0f);
@@ -68,6 +71,8 @@ public class plane_Move : MonoBehaviour
         Debug.Log("Number of gems: " + gemCount);
 
         Best_Total_Score = PlayerPrefs.GetInt("HighestScore", 0);
+
+        indicating_propeller_tocollisionwithpillars = false;
     }
     void Update()
     {
@@ -220,7 +225,7 @@ public class plane_Move : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
-
+            indicating_propeller_tocollisionwithpillars = true;
             smoke_Particle.Play();
             Dust_boom.Play();
             Spark1.Play();

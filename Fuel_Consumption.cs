@@ -33,6 +33,9 @@ public class Fuel_Consumption : MonoBehaviour
 
 
     private int decline_of_plane_counter = 1;
+
+    public GameObject Plane_partsScript_object;
+    private Plane_Parts_Rigidbody PlanePart_RB_Script;
     public GameObject Propeller_Object;
     private propeller_rotation Propeller_Script;
 
@@ -47,10 +50,13 @@ public class Fuel_Consumption : MonoBehaviour
         bar_decrease_sequence();
         Clock_for_fuel = 1;
         time_timer = 5.0f;*/
-    /*    InvokeRepeating("bar_increase_sequence", 1.0f, 1.0f);
+        /*    InvokeRepeating("bar_increase_sequence", 1.0f, 1.0f);
 
 
-        InvokeRepeating("bar_decrease_sequence", 1.0f, 3.0f);*/
+            InvokeRepeating("bar_decrease_sequence", 1.0f, 3.0f);*/
+
+
+        PlanePart_RB_Script = Plane_partsScript_object.GetComponent<Plane_Parts_Rigidbody>();
     }
 
     // Update is called once per frame
@@ -97,7 +103,7 @@ public class Fuel_Consumption : MonoBehaviour
             }
 
 
-            Planes_Script.gameObject.transform.Rotate(-(Vector3.forward) * 15  * Time.deltaTime);
+            Planes_Script.gameObject.transform.Rotate(-(Vector3.forward) * 12  * Time.deltaTime);
 
             
 
@@ -115,10 +121,23 @@ public class Fuel_Consumption : MonoBehaviour
             print(time_timer);
         }
 
-        if(barr.gameObject.transform.localScale.x == 0.0)
+        if(barr.gameObject.transform.localScale.x <= 0.0)
           {
-              print("GameOver");
-          }
+            Planes_Script.rotationSpeed = 0f;
+            Planes_Script.tiltRotate_speed = 0f;
+            Planes_Script.moveSpeed = 0f;
+            Planes_Script.sideSpeed = 0f;
+            Propeller_Script.propeller_value = 0;
+
+            Planes_Script.plane_RB.useGravity = true;
+            Planes_Script.plane_RB.freezeRotation = false;
+
+            Plane_Engine_tune.Stop();
+            if(Planes_Script.indicating_propeller_tocollisionwithpillars == true)
+            {
+                PlanePart_RB_Script.PlaneCrashed();
+            }
+        }
 
 
 

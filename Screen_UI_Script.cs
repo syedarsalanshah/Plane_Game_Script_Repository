@@ -52,7 +52,7 @@ public class Screen_UI_Script : MonoBehaviour
 
         if (Fuel_Script.barr.gameObject.transform.localScale.x <= 0.0f)
         {
-            Loser_Menu_Function();
+           /* Loser_Menu_Function();*/
         }
 
     }
