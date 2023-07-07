@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class plane_Move : MonoBehaviour
 {
+
+    public bool fuel_value = false;
     public Rigidbody plane_RB;
     private bool fall;
     public ParticleSystem smoke_Particle;
@@ -66,13 +68,14 @@ public class plane_Move : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 90, 0);
         smoke_Particle.Stop();
         White_to_gray.SetFloat("_Metallic", 0f);
-
+        
         gemCount = GameObject.FindGameObjectsWithTag("Gems").Length;
         Debug.Log("Number of gems: " + gemCount);
 
         Best_Total_Score = PlayerPrefs.GetInt("HighestScore", 0);
 
         indicating_propeller_tocollisionwithpillars = false;
+        fuel_value = false;
     }
     void Update()
     {

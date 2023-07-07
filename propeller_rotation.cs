@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class propeller_rotation : MonoBehaviour
 {
-   /* public int Space_Counter = 0;*/
+    /* public int Space_Counter = 0;*/
 
+    public bool fuel_spill_value;
     public bool fall = false;
     public bool fall_zero = false;
     public bool Engine_ON = false;
@@ -25,6 +26,7 @@ public class propeller_rotation : MonoBehaviour
         Planes_Script_for_flying = Plane_as_Object.GetComponent<plane_Move>();
 
         Fuel_Script_for_Sound = Camera_as_Object.GetComponent <Fuel_Consumption>();
+        fuel_spill_value = false;
     }
 
     // Update is called once per frame
@@ -45,7 +47,7 @@ public class propeller_rotation : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.Space))
             {
 
-
+                fuel_spill_value = true;
 
                 Fuel_Script_for_Sound.Plane_Engine_tune.volume = 1.0f;
                     Planes_Script_for_flying.rotationSpeed = 100f;
