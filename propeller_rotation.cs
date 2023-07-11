@@ -44,7 +44,7 @@ public class propeller_rotation : MonoBehaviour
            /* Planes_Script_for_flying.mouseInput = 0;*/
                 propeller_value = 0;
             
-            if (Input.GetKeyUp(KeyCode.Space))
+           /* if (Input.GetKeyUp(KeyCode.Space))
             {
 
                 fuel_spill_value = true;
@@ -54,21 +54,21 @@ public class propeller_rotation : MonoBehaviour
                     Planes_Script_for_flying.tiltRotate_speed = 50f;
                     Planes_Script_for_flying.moveSpeed = 15f;
                     Planes_Script_for_flying.sideSpeed = 14f;
-                /*Planes_Script_for_flying.translationInput ;*/
-                /* Planes_Script_for_flying.mouseInput = 0;*/
+                *//*Planes_Script_for_flying.translationInput ;*/
+                /* Planes_Script_for_flying.mouseInput = 0;*//*
                     fall_zero = false;
                     propeller_value = 60;
                     Engine_ON = true;
                     
                 
-            }
+            }*/
         }
 
 
         if (Engine_ON == true)
         {
 
-            if (Input.GetKeyUp(KeyCode.R))
+            /*if (Input.GetKeyUp(KeyCode.R))
             {
                 Fuel_Script_for_Sound.Plane_Engine_tune.volume = 0.6f;
                 Planes_Script_for_flying.rotationSpeed = 50f;
@@ -79,13 +79,13 @@ public class propeller_rotation : MonoBehaviour
                 propeller_value = 20;
 
 
-            }
+            }*/
 
 
             if (fall == true)
             {
                 Planes_Script_for_flying.gameObject.transform.Translate(Vector3.down * 3 * Time.deltaTime);
-                if (Input.GetKeyUp(KeyCode.E))
+              /*  if (Input.GetKeyUp(KeyCode.E))
                 {
                     Fuel_Script_for_Sound.Plane_Engine_tune.volume = 0.0f;
                     Planes_Script_for_flying.rotationSpeed = 0f;
@@ -98,7 +98,7 @@ public class propeller_rotation : MonoBehaviour
                     propeller_value = 0;
 
 
-                }
+                }*/
 
             }
 
@@ -115,5 +115,75 @@ public class propeller_rotation : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(5f);
         fall = false;
+    }
+
+
+    public void Replacing_Space_ForButton()
+    {
+        if (Engine_ON == false) {
+
+            fuel_spill_value = true;
+
+            Fuel_Script_for_Sound.Plane_Engine_tune.volume = 1.0f;
+            Planes_Script_for_flying.rotationSpeed = 20f;
+            Planes_Script_for_flying.tiltRotate_speed = 10f;
+            Planes_Script_for_flying.moveSpeed = 15f;
+            Planes_Script_for_flying.sideSpeed = 3f;
+            /*Planes_Script_for_flying.translationInput ;*/
+            /* Planes_Script_for_flying.mouseInput = 0;*/
+            fall_zero = false;
+            propeller_value = 60;
+            Engine_ON = true;
+
+        }
+       
+    }
+
+    public void Replacing_E_ForButton()
+    {
+        if (Engine_ON == true)
+        {
+            if (fall == true)
+            {
+                Fuel_Script_for_Sound.Plane_Engine_tune.volume = 0.0f;
+                Planes_Script_for_flying.rotationSpeed = 0f;
+                Planes_Script_for_flying.tiltRotate_speed = 0f;
+                Planes_Script_for_flying.moveSpeed = 0f;
+                Planes_Script_for_flying.sideSpeed = 0f;
+                fall_zero = true;
+                StartCoroutine(falling());
+                Engine_ON = false;
+                propeller_value = 0;
+
+
+
+
+
+
+
+            }
+        }
+
+     }
+
+
+    public void Replacing_R_ForButton()
+    {
+        if (Engine_ON == true)
+        {
+
+            Fuel_Script_for_Sound.Plane_Engine_tune.volume = 0.6f;
+            Planes_Script_for_flying.rotationSpeed = 50f;
+            Planes_Script_for_flying.tiltRotate_speed = 25f;
+            Planes_Script_for_flying.moveSpeed = 5f;
+            Planes_Script_for_flying.sideSpeed = 2f;
+            fall = true;
+            propeller_value = 20;
+
+
+
+
+        }
+
     }
 }

@@ -1,12 +1,16 @@
 using System.Collections;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using TMPro;
 
 
 public class plane_Move : MonoBehaviour
 {
 
+    private bool testing = true;
+   
     public bool fuel_value = false;
     public Rigidbody plane_RB;
     private bool fall;
@@ -23,17 +27,17 @@ public class plane_Move : MonoBehaviour
 
 
     public Material White_to_gray;
-    public float rotationSpeed = 100f;
+    public float rotationSpeed = 20f;
     public float tiltRotate_speed = 50f;
     public float moveSpeed = 1f;
-    public float sideSpeed = 10f;
+    public float sideSpeed = 3f;
     public float translationInput;
     public float mouseInput;
 
 
     public bool isPlanecrashed = false;
 
-    public float boost = 40f;
+    public float boost = 0.01f;
     public GameObject Consumption;
     private Fuel_Consumption Fuel_taking;
 
@@ -56,8 +60,12 @@ public class plane_Move : MonoBehaviour
     public GameObject Score_gameobject;
     private ScorePrototype Score_Script;
     private Checking_Script Plane_Fuel_Slider;
+
+
+
     private void Start()
     {
+        
         Fuel_taking = Consumption.GetComponent<Fuel_Consumption>();
         Plane_Fuel_Slider = Consumption.GetComponent<Checking_Script>();
         Score_Script = Score_gameobject.GetComponent<ScorePrototype>();
@@ -79,6 +87,7 @@ public class plane_Move : MonoBehaviour
     }
     void Update()
     {
+        
 
         if(fall == true)
         {
@@ -93,44 +102,45 @@ public class plane_Move : MonoBehaviour
         }
         translationInput = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        /*---------------------if (Input.GetKey(KeyCode.LeftArrow))
         {
-            /* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
-             transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*/
+            *//* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+             transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*//*
             transform.Translate(Vector3.forward * sideSpeed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.Translate(-Vector3.forward * sideSpeed * Time.deltaTime);
-        }
+        }*/
 
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+       /* ----------------------------if (Input.GetKey(KeyCode.LeftArrow))
         {
-            /* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
-             transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*/
+            *//* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+             transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*//*
             transform.Rotate(Vector3.right * tiltRotate_speed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
         }
-
-        if (Input.GetKey(KeyCode.UpArrow))
+*/
+/*        if (Input.GetKey(KeyCode.UpArrow))
         {
             transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        }*/
+        /*else if (Input.GetKey(KeyCode.DownArrow))
         {
             transform.Rotate(-(Vector3.forward), rotationSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.W) && Fuel_taking.barr.gameObject.transform.localScale.x >= 0.50)
+        }*/
+       /* if (Input.GetKey(KeyCode.W) && Fuel_taking.barr.gameObject.transform.localScale.x >= 0.50)
         {
-            /* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
-             transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*/
+            *//* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+             transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*//*
             transform.Translate(Vector3.right * boost * Time.deltaTime);
-        }
+        }*/
+
+
 
 
         mouseInput = Input.GetAxis("Mouse X");
@@ -312,5 +322,125 @@ public class plane_Move : MonoBehaviour
     IEnumerator stop_rotation()
     {
         yield return new WaitForSecondsRealtime(1f);
+    }
+
+
+    // Section for W button
+    public void Down()
+    {
+        InvokeRepeating("Replacing_W_ForButton", 0, 0.001f);
+    }
+    public void Replacing_W_ForButton()
+    {
+        if (Fuel_taking.barr.gameObject.transform.localScale.x >= 0.50)
+        {
+            /* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+             transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*/
+            transform.Translate(Vector3.right * boost * Time.deltaTime);
+        }
+    }
+    public void Up()
+    {
+        CancelInvoke("Replacing_W_ForButton");
+    }
+
+
+    //Movement Area
+    // Up Button Section
+
+    public void Down_UPArrow()
+    {
+        InvokeRepeating("Replacing_UP_Arrow", 0, 0.001f);
+    }
+    public void Replacing_UP_Arrow()
+    {
+        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+    }
+    public void Up_UPArrow()
+    {
+        CancelInvoke("Replacing_UP_Arrow");
+    }
+
+
+    // Down Button Section
+
+    public void Down_DownArrow()
+    {
+        InvokeRepeating("Replacing_Down_Arrow", 0, 0.001f);
+    }
+    public void Replacing_Down_Arrow()
+    {
+        transform.Rotate(-(Vector3.forward), rotationSpeed * Time.deltaTime);
+    }
+
+    public void Up_DownArrow()
+    {
+        CancelInvoke("Replacing_Down_Arrow");
+    }
+
+    // Left Button Section
+
+    public void Down_LeftArrow()
+    {
+        InvokeRepeating("Replacing_Left_Arrow", 0, 0.001f);
+        InvokeRepeating("Rotate_Replacing_Left_Arrow", 0, 0.002f);
+    }
+    public void Replacing_Left_Arrow()
+    {
+        transform.Translate(-Vector3.forward * sideSpeed * Time.deltaTime);
+
+        if(testing == true)
+        {
+            transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
+        }
+       // transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
+    }
+
+    public void Roate_Replacing_Left_Arrow()
+    {
+        //transform.Translate(-Vector3.forward * sideSpeed * Time.deltaTime);
+
+
+       // transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
+    }
+
+
+    public void Up_LeftArrow()
+    {
+        CancelInvoke("Replacing_Left_Arrow");
+        CancelInvoke("Rotate_Replacing_Left_Arrow");
+    }
+
+    // Right Button Section
+
+    public void Down_RightArrow()
+    {
+        InvokeRepeating("Replacing_Right_Arrow", 0, 0.001f);
+        InvokeRepeating("RotateReplacing_Right_Arrow", 0, 0.002f);
+    }
+    public void Replacing_Right_Arrow()
+    {
+        transform.Translate(Vector3.forward * sideSpeed * Time.deltaTime);
+
+        if(testing == true)
+        {
+            transform.Rotate(Vector3.right * tiltRotate_speed * Time.deltaTime);
+        }
+
+       // transform.Rotate(Vector3.right * tiltRotate_speed * Time.deltaTime);
+    }
+
+    public void Rotate_Replacing_Right_Arrow()
+    {
+        //transform.Translate(Vector3.forward * sideSpeed * Time.deltaTime);
+
+
+
+       // transform.Rotate(Vector3.right * tiltRotate_speed * Time.deltaTime);
+    }
+    public void Up_RightArrow()
+    {
+        CancelInvoke("Replacing_Right_Arrow");
+        CancelInvoke("Rotate_Replacing_Right_Arrow");
     }
 }

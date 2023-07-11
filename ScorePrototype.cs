@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ScorePrototype : MonoBehaviour
 {
+    
     private int Star_Score = 0;
     public Text Star_Text;
 
