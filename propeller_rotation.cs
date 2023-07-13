@@ -43,25 +43,25 @@ public class propeller_rotation : MonoBehaviour
           /*  Planes_Script_for_flying.translationInput = 0;*/
            /* Planes_Script_for_flying.mouseInput = 0;*/
                 propeller_value = 0;
-            
-           /* if (Input.GetKeyUp(KeyCode.Space))
+
+            if (Input.GetKeyUp(KeyCode.Space))
             {
 
                 fuel_spill_value = true;
 
                 Fuel_Script_for_Sound.Plane_Engine_tune.volume = 1.0f;
-                    Planes_Script_for_flying.rotationSpeed = 100f;
-                    Planes_Script_for_flying.tiltRotate_speed = 50f;
-                    Planes_Script_for_flying.moveSpeed = 15f;
-                    Planes_Script_for_flying.sideSpeed = 14f;
-                *//*Planes_Script_for_flying.translationInput ;*/
-                /* Planes_Script_for_flying.mouseInput = 0;*//*
-                    fall_zero = false;
-                    propeller_value = 60;
-                    Engine_ON = true;
-                    
-                
-            }*/
+                Planes_Script_for_flying.rotationSpeed = 100f;
+                Planes_Script_for_flying.tiltRotate_speed = 50f;
+                Planes_Script_for_flying.moveSpeed = 15f;
+                Planes_Script_for_flying.sideSpeed = 14f;
+               // Planes_Script_for_flying.translationInput;
+                Planes_Script_for_flying.mouseInput = 0;
+                fall_zero = false;
+                propeller_value = 60;
+                Engine_ON = true;
+
+
+            }
         }
 
 
@@ -122,6 +122,7 @@ public class propeller_rotation : MonoBehaviour
     {
         if (Engine_ON == false) {
 
+            Planes_Script_for_flying.Permission_TO_Control = true;
             fuel_spill_value = true;
 
             Fuel_Script_for_Sound.Plane_Engine_tune.volume = 1.0f;
