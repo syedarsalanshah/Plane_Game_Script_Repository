@@ -241,7 +241,7 @@ public class plane_Move : MonoBehaviour
             // Rotate the plane.
             //   transform.Rotate(rotating, 0,0);
             // transform.Rotate(rotating_y, 0, 0);
-           /* transform.Rotate(rotating_z, 0,0);*/
+           transform.Rotate(rotating_z, 0,0);
 
             g2_text.text = rotating_z.ToString();
             print("values: "+inv_rotating);
