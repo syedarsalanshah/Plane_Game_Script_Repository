@@ -20,7 +20,9 @@ public class Screen_UI_Script : MonoBehaviour
     private plane_Move Plane_Script;
     // Start is called before the first frame update
     void Start()
+
     {
+       
         Pause_Menu.gameObject.SetActive(false);
         Time.timeScale = 1.0f;
 

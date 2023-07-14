@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using TMPro;
 using System.Numerics;
-
+using Quaternion = UnityEngine.Quaternion;
 
 public class plane_Move : MonoBehaviour
 {
@@ -67,6 +67,13 @@ public class plane_Move : MonoBehaviour
     private ScorePrototype Score_Script;
     private Checking_Script Plane_Fuel_Slider;
 
+
+    //checking of gyro values
+    [SerializeField] private Text g1_text;
+    [SerializeField] private Text g2_text;
+    /* [SerializeField] private Text g3_text;
+     [SerializeField] private Text g4_text;*/
+    private int inv_rotating;
     private void Awake()
     {
        transform.localRotation = Quaternion.Euler(0, 90, 0);
@@ -74,7 +81,19 @@ public class plane_Move : MonoBehaviour
 
     private void Start()
     {
+
+
         Input.gyro.enabled = true;
+
+        if(Input.gyro.enabled == true)
+        {
+            g1_text.text = "true";
+        }
+        else
+        {
+            g1_text.text = "false";
+        }
+
         Fuel_taking = Consumption.GetComponent<Fuel_Consumption>();
         Plane_Fuel_Slider = Consumption.GetComponent<Checking_Script>();
         Score_Script = Score_gameobject.GetComponent<ScorePrototype>();
@@ -99,20 +118,11 @@ public class plane_Move : MonoBehaviour
     {
 
 
-        if (Permission_TO_Control == true)
-        {
-            float gyroInput = Input.gyro.rotationRate.z * Time.deltaTime;
 
-            // Calculate the amount of rotation.
-            float rotation = gyroInput * 0.1f;
-
-            // Rotate the plane.
-            transform.Rotate(0, 0, rotation);
-        }
 
         if (fall == true)
         {
-            transform.Translate(Vector3.down * 5 * Time.deltaTime);
+            transform.Translate(UnityEngine.Vector3.down * 5 * Time.deltaTime);
         }
 
         gemCount = GameObject.FindGameObjectsWithTag("Gems").Length;
@@ -120,6 +130,7 @@ public class plane_Move : MonoBehaviour
         if (Time.time < 0.5f)
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);
+           
         }
         translationInput = Input.GetAxis("Vertical");
 
@@ -176,12 +187,12 @@ public class plane_Move : MonoBehaviour
         if (Permission_TO_Control == true)
         {
         
-            float move_X = Joystick.Horizontal * 17 * Time.deltaTime;
+            float move_X = Joystick.Horizontal * 15 * Time.deltaTime;
            
             transform.Translate(0, 0, -move_X);
         }
 
-        transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+        transform.Translate(UnityEngine.Vector3.right * moveSpeed * Time.deltaTime);
 
 
         if(Fuel_taking.value_of_fuel_zero == 0)
@@ -210,6 +221,32 @@ public class plane_Move : MonoBehaviour
             print("Total Best score is " + Best_Total_Score);
             PlayerPrefs.SetInt("HighestScore", Best_Total_Score);
         }
+
+        float xval = Input.gyro.rotationRate.x;
+        
+
+      
+    
+        if (Permission_TO_Control == true)
+        {
+            // float gyroInput = Input.gyro.rotationRate.x * Time.deltaTime;
+            /* float gyroInput_y = Input.gyro.rotationRate.y * Time.deltaTime;*/
+            float gyroInput_z = Input.gyro.rotationRate.z * Time.deltaTime;
+
+            // Calculate the amount of rotation.
+            //    float rotating = gyroInput * 40;
+            /* float rotating_y = gyroInput_y * 40;*/
+            float rotating_z = gyroInput_z * 40;
+
+            // Rotate the plane.
+            //   transform.Rotate(rotating, 0,0);
+            // transform.Rotate(rotating_y, 0, 0);
+            transform.Rotate(rotating_z, 0,0);
+
+            g2_text.text = rotating_z.ToString();
+            print("values: "+inv_rotating);
+
+        }
     }
 
     private void FixedUpdate()
@@ -217,13 +254,21 @@ public class plane_Move : MonoBehaviour
         if(Permission_TO_Control == true)
         {
             float rotation_Z = Joystick.Vertical * 50 * Time.deltaTime;
-            float rotation_X = Joystick.Horizontal * 25 * Time.deltaTime;
+            //float rotation_X = Joystick.Horizontal * 25 * Time.deltaTime;
 /*            float move_X = Joystick.Horizontal * 17 * Time.deltaTime;*/
-            transform.Rotate(-rotation_X, 0, rotation_Z);
+            transform.Rotate(0, 0, rotation_Z);
+
            /* transform.Translate(0, 0, -move_X);*/
         }
         /*transform.Rotate(Joystick.Horizontal * Time.deltaTime * 50, transform.rotation.y , Joystick.Vertical * Time.deltaTime * 20);*/
-       
+
+
+
+
+
+
+
+
 
     }
 
@@ -388,7 +433,7 @@ public class plane_Move : MonoBehaviour
         {
             /* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
              transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*/
-            transform.Translate(Vector3.right * boost * Time.deltaTime);
+            transform.Translate(UnityEngine.Vector3.right * boost * Time.deltaTime);
         }
     }
     public void Up()
@@ -406,7 +451,7 @@ public class plane_Move : MonoBehaviour
     }
     public void Replacing_UP_Arrow()
     {
-        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+        transform.Rotate(UnityEngine.Vector3.forward * rotationSpeed * Time.deltaTime);
     }
     public void Up_UPArrow()
     {
@@ -423,7 +468,7 @@ public class plane_Move : MonoBehaviour
     }
     public void Replacing_Down_Arrow()
     {
-        transform.Rotate(-(Vector3.forward), rotationSpeed * Time.deltaTime);
+        transform.Rotate(-(UnityEngine.Vector3.forward), rotationSpeed * Time.deltaTime);
     }
 
     public void Up_DownArrow()
@@ -441,11 +486,11 @@ public class plane_Move : MonoBehaviour
     public void Replacing_Left_Arrow()
         
     {
-        transform.Translate(-Vector3.forward * sideSpeed * Time.deltaTime);
+        transform.Translate(-UnityEngine.Vector3.forward * sideSpeed * Time.deltaTime);
 
         if (testing == true)
         {
-            transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
+            transform.Rotate(-UnityEngine.Vector3.right * tiltRotate_speed * Time.deltaTime);
         }
 
         // transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
@@ -476,13 +521,13 @@ public class plane_Move : MonoBehaviour
     }
     public void Replacing_Right_Arrow()
     {
-        transform.Translate(Vector3.forward * sideSpeed * Time.deltaTime);
+        transform.Translate(UnityEngine.Vector3.forward * sideSpeed * Time.deltaTime);
 
         if (testing == true)
         {
            /* transform.Rotate(Vector3.right * tiltRotate_speed * Time.deltaTime);*/
             /*  transform.rotation += Quaternion.Euler(Vector3.right * tiltRotate_speed * Time.deltaTime);*/
-            Quaternion tiltRotation = Quaternion.Euler(Vector3.right * tiltRotate_speed * Time.deltaTime);
+            Quaternion tiltRotation = Quaternion.Euler(UnityEngine.Vector3.right * tiltRotate_speed * Time.deltaTime);
 
             // Rotate the transform by the tilt rotation.
             transform.rotation *= tiltRotation;
