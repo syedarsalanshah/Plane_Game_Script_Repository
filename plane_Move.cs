@@ -236,12 +236,12 @@ public class plane_Move : MonoBehaviour
             // Calculate the amount of rotation.
             //    float rotating = gyroInput * 40;
             /* float rotating_y = gyroInput_y * 40;*/
-            float rotating_z = gyroInput_z * 40;
+            float rotating_z = gyroInput_z * 60;
 
             // Rotate the plane.
             //   transform.Rotate(rotating, 0,0);
             // transform.Rotate(rotating_y, 0, 0);
-            transform.Rotate(rotating_z, 0,0);
+           /* transform.Rotate(rotating_z, 0,0);*/
 
             g2_text.text = rotating_z.ToString();
             print("values: "+inv_rotating);

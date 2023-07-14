@@ -101,4 +101,9 @@ public class Screen_UI_Script : MonoBehaviour
        
     }
 
+    public void Restart_Menu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }

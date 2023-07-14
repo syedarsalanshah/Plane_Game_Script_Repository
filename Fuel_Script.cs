@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Fuel_Script : MonoBehaviour
 {
+    [SerializeField] private int value = 20;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,7 @@ public class Fuel_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+       transform.Rotate(0, 10 * Time.deltaTime * value, 0);
         
     }
 
