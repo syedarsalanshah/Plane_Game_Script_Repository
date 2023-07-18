@@ -21,6 +21,10 @@ public class Fuel_Consumption : MonoBehaviour
     private plane_Move Planes_Script;
 
 
+    public GameObject Fuel_Icon_as_Object;
+    public GameObject Fuel_Background_as_Object;
+
+
     public AudioSource fuel_alaram_tune;
     public AudioSource Crash_tune;
     public AudioSource Petrol_Filling_tune;
@@ -74,8 +78,8 @@ public class Fuel_Consumption : MonoBehaviour
                 
                  fuel_alaram_tune.Play();
                 counter_for_fuel_alaram = 0;
-
-
+               /* StartCoroutine(Fuel_Warning_Image_Timer());*/
+              
 
              }
         }
@@ -112,6 +116,30 @@ public class Fuel_Consumption : MonoBehaviour
 
 
     }
+
+    void Fuel_ON()
+    {
+        Fuel_Background_as_Object.gameObject.SetActive(true);
+        Fuel_Icon_as_Object.gameObject.SetActive(true);
+    }
+
+    void Fuel_OFF()
+    {
+        Fuel_Background_as_Object.gameObject.SetActive(false);
+        Fuel_Icon_as_Object.gameObject.SetActive(false);
+    }
+  /*  IEnumerator Fuel_Warning_Image_Timer()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
+        Fuel_Background_as_Object.gameObject.SetActive(false);
+        Fuel_Icon_as_Object.gameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(0.2f);
+        Fuel_Icon_as_Object.gameObject.SetActive(true);
+        Fuel_Background_as_Object.gameObject.SetActive(true);
+        yield return new WaitForSecondsRealtime(0.2f);
+        Fuel_Icon_as_Object.gameObject.SetActive(false);
+        Fuel_Background_as_Object.gameObject.SetActive(false);
+    }*/
     void FixedUpdate()
     {
         if(Time.time == time_timer)

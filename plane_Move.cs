@@ -84,7 +84,7 @@ public class plane_Move : MonoBehaviour
 
 
         Input.gyro.enabled = true;
-
+        
         if(Input.gyro.enabled == true)
         {
             g1_text.text = "true";
