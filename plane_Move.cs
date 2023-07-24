@@ -9,9 +9,14 @@ using Quaternion = UnityEngine.Quaternion;
 
 public class plane_Move : MonoBehaviour
 {
-
+    [SerializeField] private int rotae;
+    private float gyro_Z_sensitivity = 60;
     public bool Permission_TO_Control =false;
     private bool testing = true;
+
+    public bool Allow_to_Rotate;
+
+    private UnityEngine.Vector3 Previous_Position;
 
     public FixedJoystick Joystick;
 
@@ -65,7 +70,10 @@ public class plane_Move : MonoBehaviour
     private propeller_rotation Propeller_Script;
     public GameObject Score_gameobject;
     private ScorePrototype Score_Script;
+
     private Checking_Script Plane_Fuel_Slider;
+    public GameObject Slider_from_New_Fuel;
+    private FuelBar_New_Script New_Fuel_Script;
 
 
     //checking of gyro values
@@ -100,6 +108,8 @@ public class plane_Move : MonoBehaviour
         Propeller_Script = Propeller_Gameobject.GetComponent<propeller_rotation>();
         Main_Screen_UI_Script = Screen_UI_Object.GetComponent<Screen_UI_Script>();
 
+        New_Fuel_Script = Slider_from_New_Fuel.GetComponent<FuelBar_New_Script>();
+
         /* plane_RB = GetComponent<Rigidbody>();*/
        
        // transform.Rotate(0, 90, 0);
@@ -113,6 +123,30 @@ public class plane_Move : MonoBehaviour
 
         indicating_propeller_tocollisionwithpillars = false;
         fuel_value = false;
+
+        InvokeRepeating("Check_Position", 0, 1.0f);
+    }
+
+
+    private void LateUpdate()
+    {
+       if ( Joystick.isActiveAndEnabled)
+        {
+            print("You what is");
+        }
+        if (Joystick.Horizontal >= 0.5 && Joystick.Horizontal <= 0.75 || Joystick.Horizontal <= 0.5 && Joystick.Horizontal >= 0.75)
+        {
+
+            if(Allow_to_Rotate == false)
+            {
+                transform.Rotate(rotae, 0, 0);
+                Allow_to_Rotate = true;
+            }
+           
+
+          
+
+        }
     }
     void Update()
     {
@@ -132,7 +166,7 @@ public class plane_Move : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 90, 0);
            
         }
-        translationInput = Input.GetAxis("Vertical");
+       // translationInput = Input.GetAxis("Vertical");
 
         /*---------------------if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -182,20 +216,55 @@ public class plane_Move : MonoBehaviour
 
         /* transform.Translate(Vector3.forward * translationInput * moveSpeed * Time.deltaTime);
          transform.Translate(Vector3.right * sideSpeed * Time.deltaTime);*/
-
+      //  print("Joystick Horizontal"+Joystick.Horizontal);
 
         if (Permission_TO_Control == true)
         {
+
+            if(Joystick.Horizontal >= -0.4  || Joystick.Horizontal <= 0.4)
+            {
+                float move_X = Joystick.Horizontal * 10 * Time.deltaTime;
+
+                transform.Translate(0, 0, -move_X);
+                
+            }
+            else if(Joystick.Horizontal >= 0.5 && Joystick.Horizontal <= 0.75 || Joystick.Horizontal <= 0.5 && Joystick.Horizontal >= 0.75)
+            {
+                float move_X = Joystick.Horizontal * 25 * Time.deltaTime;
+
+                transform.Translate(0, 0, -move_X);
+
+            }
+            else
+            {
+                float move_X = Joystick.Horizontal * 40 * Time.deltaTime;
+
+                transform.Translate(0, 0, -move_X);
+                
+
+             
+            }
         
-            float move_X = Joystick.Horizontal * 15 * Time.deltaTime;
            
-            transform.Translate(0, 0, -move_X);
+        }
+        print(Joystick.Vertical);
+        if(Joystick.Vertical >= 0.4 && /*Fuel_taking.barr.gameObject.transform.localScale.x >= 0.5f*/ New_Fuel_Script.New_Fuel_Slider_OB.value >= 5f)
+        {
+            transform.Translate(UnityEngine.Vector3.right * 30 * Time.deltaTime);
+        }
+        else if(Joystick.Vertical <= -0.4)
+        {
+            transform.Translate(UnityEngine.Vector3.right * 8 * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(UnityEngine.Vector3.right * moveSpeed * Time.deltaTime);
         }
 
-        transform.Translate(UnityEngine.Vector3.right * moveSpeed * Time.deltaTime);
+        
 
 
-        if(Fuel_taking.value_of_fuel_zero == 0)
+        if (Fuel_taking.value_of_fuel_zero == 0)
         {
            // print("yes");
            // transform.Translate(Vector3.down *10* Time.deltaTime);
@@ -236,7 +305,7 @@ public class plane_Move : MonoBehaviour
             // Calculate the amount of rotation.
             //    float rotating = gyroInput * 40;
             /* float rotating_y = gyroInput_y * 40;*/
-            float rotating_z = gyroInput_z * 60;
+            float rotating_z = gyroInput_z * gyro_Z_sensitivity;
 
             // Rotate the plane.
             //   transform.Rotate(rotating, 0,0);
@@ -244,19 +313,41 @@ public class plane_Move : MonoBehaviour
            transform.Rotate(rotating_z, 0,0);
 
             g2_text.text = rotating_z.ToString();
-            print("values: "+inv_rotating);
+          //  print("values: "+inv_rotating);
 
         }
     }
 
+    
+
     private void FixedUpdate()
     {
-        if(Permission_TO_Control == true)
+
+       
+       
+        if (Permission_TO_Control == true)
         {
-            float rotation_Z = Joystick.Vertical * 50 * Time.deltaTime;
+            // float gyroInput = Input.gyro.rotationRate.x * Time.deltaTime;
+            /* float gyroInput_y = Input.gyro.rotationRate.y * Time.deltaTime;*/
+            float gyroInput_x = Input.gyro.rotationRate.x * Time.deltaTime;
+
+            // Calculate the amount of rotation.
+            //    float rotating = gyroInput * 40;
+            /* float rotating_y = gyroInput_y * 40;*/
+            float rotating_x = gyroInput_x * 65;
+
+            // Rotate the plane.
+            //   transform.Rotate(rotating, 0,0);
+            // transform.Rotate(rotating_y, 0, 0);
+            transform.Rotate(0, 0, rotating_x);
+        }
+
+            if (Permission_TO_Control == true)
+        {
+            //float rotation_Z = Joystick.Vertical * gyro_Z_sensitivity * Time.deltaTime;
             //float rotation_X = Joystick.Horizontal * 25 * Time.deltaTime;
 /*            float move_X = Joystick.Horizontal * 17 * Time.deltaTime;*/
-            transform.Rotate(0, 0, rotation_Z);
+          //  transform.Rotate(0, 0, rotation_Z);
 
            /* transform.Translate(0, 0, -move_X);*/
         }
@@ -281,6 +372,7 @@ public class plane_Move : MonoBehaviour
              */
             /*StartCoroutine(calling_decrease());*/
             Plane_Fuel_Slider.Checking = true;
+            Plane_Fuel_Slider.inc();
             Destroy(other.gameObject);
             fuel_counter = 2;
             StartCoroutine(fuel_counter_timing());
@@ -429,7 +521,7 @@ public class plane_Move : MonoBehaviour
     }
     public void Replacing_W_ForButton()
     {
-        if (Fuel_taking.barr.gameObject.transform.localScale.x >= 0.50)
+        if (Fuel_taking.barr.gameObject.transform.localScale.x >= 0.50 && Propeller_Script.Engine_ON == true)
         {
             /* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
              transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*/
@@ -548,5 +640,21 @@ public class plane_Move : MonoBehaviour
     {
         CancelInvoke("Replacing_Right_Arrow");
       /*  CancelInvoke("Rotate_Replacing_Right_Arrow");*/
+    }
+
+
+    void Check_Position()
+    {
+        Previous_Position = transform.position;
+        StartCoroutine(Check_Position_Timer());
+
+    }
+    IEnumerator Check_Position_Timer()
+    {
+        yield return new WaitForSecondsRealtime(3.0f);
+        if(Previous_Position == transform.position && Propeller_Script.Engine_ON == true)
+        {
+            Main_Screen_UI_Script.Loser_Menu.gameObject.SetActive(true);
+        }
     }
 }

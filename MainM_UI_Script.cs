@@ -24,8 +24,8 @@ public class MainM_UI_Script : MonoBehaviour
     public void Quit()
     {
 
-        /*Application.Quit();*/
-        print("Quit");
+        Application.Quit();
+        
 
     }
     

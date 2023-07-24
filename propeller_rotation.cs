@@ -13,7 +13,9 @@ public class propeller_rotation : MonoBehaviour
     public bool Engine_ON = false;
     public float propeller_value = 5;
     // Start is called before the first frame update
-
+    private int on_off_value = 0;
+    public GameObject Start_ON_imgae;
+    public GameObject Start_OFF_imgae;
 
     public GameObject Plane_as_Object;
     private plane_Move Planes_Script_for_flying;
@@ -107,6 +109,8 @@ public class propeller_rotation : MonoBehaviour
         if(fall_zero == true)
         {
             Planes_Script_for_flying.gameObject.transform.Translate(Vector3.down * 6 * Time.deltaTime);
+            Planes_Script_for_flying.gameObject.transform.Translate(Vector3.right * 6 * Time.deltaTime);
+
         }
 
         transform.Rotate(propeller_value, 0, 0);
@@ -121,6 +125,15 @@ public class propeller_rotation : MonoBehaviour
     public void Replacing_Space_ForButton()
     {
         if (Engine_ON == false) {
+
+            on_off_value = 1;
+
+            if(on_off_value == 1)
+            {
+                Start_ON_imgae.gameObject.SetActive(true);
+                Start_OFF_imgae.gameObject.SetActive(false);
+            }
+            
 
             Planes_Script_for_flying.Permission_TO_Control = true;
             fuel_spill_value = true;
@@ -144,15 +157,21 @@ public class propeller_rotation : MonoBehaviour
     {
         if (Engine_ON == true)
         {
-            if (fall == true)
+            on_off_value = 0;
+            if (on_off_value == 0)
             {
+                Start_ON_imgae.gameObject.SetActive(false);
+                Start_OFF_imgae.gameObject.SetActive(true);
+            }
+
+            
                 Fuel_Script_for_Sound.Plane_Engine_tune.volume = 0.0f;
                 Planes_Script_for_flying.rotationSpeed = 0f;
                 Planes_Script_for_flying.tiltRotate_speed = 0f;
                 Planes_Script_for_flying.moveSpeed = 0f;
                 Planes_Script_for_flying.sideSpeed = 0f;
                 fall_zero = true;
-                StartCoroutine(falling());
+              //  StartCoroutine(falling());
                 Engine_ON = false;
                 propeller_value = 0;
 
@@ -162,7 +181,7 @@ public class propeller_rotation : MonoBehaviour
 
 
 
-            }
+            
         }
 
      }
@@ -186,5 +205,13 @@ public class propeller_rotation : MonoBehaviour
 
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            Planes_Script_for_flying.isPlanecrashed = true;
+        }
     }
 }

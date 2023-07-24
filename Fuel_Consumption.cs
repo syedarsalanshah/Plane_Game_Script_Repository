@@ -8,14 +8,18 @@ using Unity.VisualScripting;
 
 public class Fuel_Consumption : MonoBehaviour
 {
-  
+
+    private bool Fuel_Indicator_BOOL;
     public int Timer;
     public GameObject barr;
     public int val;
     public int value_of_fuel_zero = 1;
 
     public bool bool_of_fuel_to_Allow = false;
-    private float current_leanScale = 1;
+    // private float current_leanScale = 1;
+
+
+    public Slider New_Fuel_Slider_GO;
 
     public GameObject Plane_as_Object;
     private plane_Move Planes_Script;
@@ -61,27 +65,30 @@ public class Fuel_Consumption : MonoBehaviour
 
 
         PlanePart_RB_Script = Plane_partsScript_object.GetComponent<Plane_Parts_Rigidbody>();
+
+        InvokeRepeating("Fuel_ON", 0, 1);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-       
+        
+      
         
 
-        if (barr.gameObject.transform.localScale.x <= 0.5f && barr.gameObject.transform.localScale.x >= 0.01f)
+        if (/*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value <= 5f && /*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value >= 0.01f)
         {
-
-            if(counter_for_fuel_alaram == 1)
+          
+            if (counter_for_fuel_alaram == 1)
              {
                 
                  fuel_alaram_tune.Play();
                 counter_for_fuel_alaram = 0;
-               /* StartCoroutine(Fuel_Warning_Image_Timer());*/
+                /* StartCoroutine(Fuel_Warning_Image_Timer());*/
               
 
-             }
+               
+            }
         }
         else
         {
@@ -91,7 +98,7 @@ public class Fuel_Consumption : MonoBehaviour
         }
 
 
-        if ((barr.gameObject.transform.localScale.x <= 0.35f) && (barr.gameObject.transform.localScale.x >= 0.001f))
+        if ((/*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value <= 3.5f) && (/*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value >= 0.001f))
         {
             if (decline_of_plane_counter == 1)
             {
@@ -117,29 +124,55 @@ public class Fuel_Consumption : MonoBehaviour
 
     }
 
+
     void Fuel_ON()
     {
-        Fuel_Background_as_Object.gameObject.SetActive(true);
-        Fuel_Icon_as_Object.gameObject.SetActive(true);
+        if (/*barr.gameObject.transform.localScale.x*/ New_Fuel_Slider_GO.value  > 0 && Fuel_Indicator_BOOL && /*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value <= 5f || /*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value == 0.0100000f)
+        {
+            Fuel_Background_as_Object.gameObject.SetActive(true);
+            Fuel_Icon_as_Object.gameObject.SetActive(true);
+            Fuel_Indicator_BOOL = false;
+           
+        }
+        else if(!Fuel_Indicator_BOOL)
+        {
+            Fuel_Background_as_Object.gameObject.SetActive(false);
+            Fuel_Icon_as_Object.gameObject.SetActive(false);
+            Fuel_Indicator_BOOL = true;
+
+        }
+
+
     }
 
     void Fuel_OFF()
     {
-        Fuel_Background_as_Object.gameObject.SetActive(false);
-        Fuel_Icon_as_Object.gameObject.SetActive(false);
+      
+       
     }
-  /*  IEnumerator Fuel_Warning_Image_Timer()
+    IEnumerator Fuel_Warning_Image_Timer()
     {
-        yield return new WaitForSecondsRealtime(0.2f);
-        Fuel_Background_as_Object.gameObject.SetActive(false);
-        Fuel_Icon_as_Object.gameObject.SetActive(false);
-        yield return new WaitForSecondsRealtime(0.2f);
+        yield return new WaitForSecondsRealtime(1.0f);
         Fuel_Icon_as_Object.gameObject.SetActive(true);
         Fuel_Background_as_Object.gameObject.SetActive(true);
-        yield return new WaitForSecondsRealtime(0.2f);
-        Fuel_Icon_as_Object.gameObject.SetActive(false);
+        StartCoroutine(next());
+       /* yield return new WaitForSecondsRealtime(1.0f);
+        Fuel_Indicator_BOOL = true;
         Fuel_Background_as_Object.gameObject.SetActive(false);
-    }*/
+       Fuel_Icon_as_Object.gameObject.SetActive(false);*/
+     /*   yield return new WaitForSecondsRealtime(0.2f);
+        Fuel_Icon_as_Object.gameObject.SetActive(false);
+        Fuel_Background_as_Object.gameObject.SetActive(false);*/
+
+    }
+    IEnumerator next()
+    {
+        yield return new WaitForSecondsRealtime(1.0f);
+        Fuel_Indicator_BOOL = true;
+        Fuel_Background_as_Object.gameObject.SetActive(false);
+        Fuel_Icon_as_Object.gameObject.SetActive(false);
+
+    }
     void FixedUpdate()
     {
         if(Time.time == time_timer)
