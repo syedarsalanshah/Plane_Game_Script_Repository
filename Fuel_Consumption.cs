@@ -1,22 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DentedPixel;
-using JetBrains.Annotations;
 using UnityEngine.UI;
-using Unity.VisualScripting;
+
 
 public class Fuel_Consumption : MonoBehaviour
 {
 
     private bool Fuel_Indicator_BOOL;
     public int Timer;
-    public GameObject barr;
+  
     public int val;
     public int value_of_fuel_zero = 1;
 
     public bool bool_of_fuel_to_Allow = false;
-    // private float current_leanScale = 1;
+   
 
 
     public Slider New_Fuel_Slider_GO;
@@ -76,7 +73,7 @@ public class Fuel_Consumption : MonoBehaviour
       
         
 
-        if (/*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value <= 5f && /*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value >= 0.01f)
+        if (/*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value <= 4f && /*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value >= 0.01f)
         {
           
             if (counter_for_fuel_alaram == 1)
@@ -98,7 +95,7 @@ public class Fuel_Consumption : MonoBehaviour
         }
 
 
-        if ((/*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value <= 3.5f) && (/*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value >= 0.001f))
+        if ((New_Fuel_Slider_GO.value <= 1.5f) && (New_Fuel_Slider_GO.value >= 0.001f))
         {
             if (decline_of_plane_counter == 1)
             {
@@ -127,7 +124,7 @@ public class Fuel_Consumption : MonoBehaviour
 
     void Fuel_ON()
     {
-        if (/*barr.gameObject.transform.localScale.x*/ New_Fuel_Slider_GO.value  > 0 && Fuel_Indicator_BOOL && /*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value <= 5f || /*barr.gameObject.transform.localScale.x*/New_Fuel_Slider_GO.value == 0.0100000f)
+        if ( New_Fuel_Slider_GO.value  > 0 && Fuel_Indicator_BOOL && New_Fuel_Slider_GO.value <= 5f || New_Fuel_Slider_GO.value == 0.0100000f)
         {
             Fuel_Background_as_Object.gameObject.SetActive(true);
             Fuel_Icon_as_Object.gameObject.SetActive(true);
@@ -179,10 +176,10 @@ public class Fuel_Consumption : MonoBehaviour
         {
           
             time_timer = Time.time+5.0f;
-            print(time_timer);
+           // print(time_timer);
         }
 
-        if(barr.gameObject.transform.localScale.x <= 0.0)
+        if(New_Fuel_Slider_GO.value <= 0.0)
           {
             Planes_Script.rotationSpeed = 0f;
             Planes_Script.tiltRotate_speed = 0f;
@@ -194,10 +191,7 @@ public class Fuel_Consumption : MonoBehaviour
             Planes_Script.plane_RB.freezeRotation = false;
 
             Plane_Engine_tune.Stop();
-            if(Planes_Script.indicating_propeller_tocollisionwithpillars == true)
-            {
-                PlanePart_RB_Script.PlaneCrashed();
-            }
+           
         }
 
 

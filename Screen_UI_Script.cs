@@ -9,7 +9,7 @@ public class Screen_UI_Script : MonoBehaviour
     public GameObject Pause_Menu;
     public GameObject Winner_Menu;
     public GameObject Loser_Menu;
-
+    
     public Text CurrentScore_UI_Text;
     public Text HighestScore_UI_Text;
     public Text Loser_Current_UI_Text;
@@ -52,10 +52,7 @@ public class Screen_UI_Script : MonoBehaviour
             Fuel_Script.Plane_Blast.Pause();
         }
 
-        if (Fuel_Script.barr.gameObject.transform.localScale.x <= 0.0f)
-        {
-           /* Loser_Menu_Function();*/
-        }
+      
 
     }
     public void Pause_menu()

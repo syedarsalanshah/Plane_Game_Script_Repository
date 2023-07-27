@@ -5,10 +5,13 @@ using UnityEngine;
 public class Fuel_Script : MonoBehaviour
 {
     [SerializeField] private int value = 20;
+
+    
+   
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -22,11 +25,13 @@ public class Fuel_Script : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Plane")){
             Destroy(gameObject);
-        }
+          
 
+        }
+       /*
         if (other.gameObject.CompareTag("Respawn"))
         {
             print("no");
-        }
+        }*/
     }
 }

@@ -7,6 +7,8 @@ public class propeller_rotation : MonoBehaviour
 {
     /* public int Space_Counter = 0;*/
 
+   
+
     public bool fuel_spill_value;
     public bool fall = false;
     public bool fall_zero = false;
@@ -29,6 +31,9 @@ public class propeller_rotation : MonoBehaviour
 
         Fuel_Script_for_Sound = Camera_as_Object.GetComponent <Fuel_Consumption>();
         fuel_spill_value = false;
+
+     
+
     }
 
     // Update is called once per frame
