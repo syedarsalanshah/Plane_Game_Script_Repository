@@ -23,6 +23,7 @@ public class Camera_Script : MonoBehaviour
         transform.LookAt(Plane.transform.position);
 
     }
+   
     // Update is called once per frame
     void Update()
     {

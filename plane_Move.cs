@@ -11,6 +11,12 @@ using Slider = UnityEngine.UI.Slider;
 
 public class plane_Move : MonoBehaviour
 {
+    private float gyroInput_z;
+    private float gyroInput_x;
+    public GameObject Main_Camera;
+    public GameObject Secondary_Camera;
+    public GameObject Empty_Secondary_GO;
+
     [SerializeField] private int rotate;
     private float gyro_Z_sensitivity = 60;
     public bool Permission_TO_Control =false;
@@ -309,7 +315,7 @@ public class plane_Move : MonoBehaviour
         {
             // float gyroInput = Input.gyro.rotationRate.x * Time.deltaTime;
             /* float gyroInput_y = Input.gyro.rotationRate.y * Time.deltaTime;*/
-            float gyroInput_z = Input.gyro.rotationRate.z * Time.deltaTime;
+            gyroInput_z = Input.gyro.rotationRate.z * Time.deltaTime;
 
             // Calculate the amount of rotation.
             //    float rotating = gyroInput * 40;
@@ -338,7 +344,7 @@ public class plane_Move : MonoBehaviour
         {
             // float gyroInput = Input.gyro.rotationRate.x * Time.deltaTime;
             /* float gyroInput_y = Input.gyro.rotationRate.y * Time.deltaTime;*/
-            float gyroInput_x = Input.gyro.rotationRate.x * Time.deltaTime;
+            gyroInput_x = Input.gyro.rotationRate.x * Time.deltaTime;
 
             // Calculate the amount of rotation.
             //    float rotating = gyroInput * 40;
@@ -473,28 +479,42 @@ public class plane_Move : MonoBehaviour
         if (collision.gameObject.CompareTag("savor"))
         {
             print("gamefinished");
+            Main_Camera.SetActive(false);
+            Empty_Secondary_GO.SetActive(true);
+            Secondary_Camera.SetActive(true);
             Propeller_Script.fall_zero = false;
             rotationSpeed = 0f;
             tiltRotate_speed = 0f;
             moveSpeed = 0f;
             sideSpeed = 0f;
+            transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y,0);
+            transform.position = new UnityEngine.Vector3(transform.position.x, 21.75f, transform.position.z);
+            gyroInput_x = 0;
+            gyroInput_z = 0;
             /*  Planes_Script_for_flying.translationInput = 0;*/
             /* Planes_Script_for_flying.mouseInput = 0;*/
             Propeller_Script.propeller_value = 0;
+            StartCoroutine(ShowingResult_GUI());
 
         }
 
-        if (collision.gameObject.CompareTag("savor") && current_Score >= 100)
+      
+
+        
+    }
+    IEnumerator ShowingResult_GUI()
+    {
+        yield return new WaitForSecondsRealtime(5.0f);
+        if (current_Score >= 100)
         {
             Main_Screen_UI_Script.Winner_Menu_Function();
         }
 
-        if (collision.gameObject.CompareTag("savor") && current_Score < 100)
+        if (current_Score < 100)
         {
             Main_Screen_UI_Script.Loser_Menu_Function();
         }
 
-        
     }
     IEnumerator CallingLoserFunction()
     {
