@@ -11,6 +11,9 @@ using Slider = UnityEngine.UI.Slider;
 
 public class plane_Move : MonoBehaviour
 {
+    private Quaternion initial_rotation;
+    private float move_X;
+    private bool Stop_values_Bool;
     private float gyroInput_z;
     private float gyroInput_x;
     public GameObject Main_Camera;
@@ -99,6 +102,7 @@ public class plane_Move : MonoBehaviour
 
     private void Start()
     {
+        initial_rotation = transform.rotation;
        // InvokeRepeating("function_for_correction_rotation", 0, 5);
 
         New_Fuel_Script = GameObject.Find("Fuel_Bar_New").GetComponent<FuelBar_New_Script>();
@@ -238,21 +242,21 @@ public class plane_Move : MonoBehaviour
 
             if(Joystick.Horizontal >= -0.4  || Joystick.Horizontal <= 0.4)
             {
-                float move_X = Joystick.Horizontal * 10 * Time.deltaTime;
+                move_X = Joystick.Horizontal * 10 * Time.deltaTime;
 
                 transform.Translate(0, 0, -move_X);
                 
             }
             else if(Joystick.Horizontal >= 0.5 && Joystick.Horizontal <= 0.75 || Joystick.Horizontal <= 0.5 && Joystick.Horizontal >= 0.75)
             {
-                float move_X = Joystick.Horizontal * 25 * Time.deltaTime;
+                move_X = Joystick.Horizontal * 25 * Time.deltaTime;
 
                 transform.Translate(0, 0, -move_X);
 
             }
             else
             {
-                float move_X = Joystick.Horizontal * 40 * Time.deltaTime;
+                move_X = Joystick.Horizontal * 40 * Time.deltaTime;
 
                 transform.Translate(0, 0, -move_X);
                 
@@ -338,6 +342,15 @@ public class plane_Move : MonoBehaviour
     private void FixedUpdate()
     {
 
+        if(Stop_values_Bool == true)
+        {
+            gyroInput_x = 0;
+            gyroInput_z = 0;
+            move_X = 0;
+
+
+
+        }
        
        
         if (Permission_TO_Control == true)
@@ -478,6 +491,7 @@ public class plane_Move : MonoBehaviour
 
         if (collision.gameObject.CompareTag("savor"))
         {
+            Stop_values_Bool = true;
             print("gamefinished");
             Main_Camera.SetActive(false);
             Empty_Secondary_GO.SetActive(true);
@@ -681,5 +695,12 @@ public class plane_Move : MonoBehaviour
         {
             Main_Screen_UI_Script.Loser_Menu.gameObject.SetActive(true);
         }
+    }
+
+
+    public void Adjust_Plane_Position_Fun()
+    {
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        ;
     }
 }
