@@ -11,9 +11,10 @@ using Slider = UnityEngine.UI.Slider;
 
 public class plane_Move : MonoBehaviour
 {
+
     private Quaternion initial_rotation;
     private float move_X;
-    private bool Stop_values_Bool;
+    private bool Stop_values_Bool = false;
     private float gyroInput_z;
     private float gyroInput_x;
     public GameObject Main_Camera;
@@ -267,11 +268,11 @@ public class plane_Move : MonoBehaviour
            
         }
        
-        if(Joystick.Vertical >= 0.4 && /*Fuel_taking.barr.gameObject.transform.localScale.x >= 0.5f*/ Slider_NF.value >= 5f && Propeller_Script.Engine_ON == true)
+        if(Joystick.Vertical >= 0.4 && /*Fuel_taking.barr.gameObject.transform.localScale.x >= 0.5f*/ Slider_NF.value >= 5f && Propeller_Script.Engine_ON == true && Stop_values_Bool == false)
         {
             transform.Translate(UnityEngine.Vector3.right * 30 * Time.deltaTime);
         }
-        else if(Joystick.Vertical <= -0.4 && Propeller_Script.Engine_ON == true)
+        else if(Joystick.Vertical <= -0.4 && Propeller_Script.Engine_ON == true && Stop_values_Bool == false)
         {
             transform.Translate(UnityEngine.Vector3.right * 8 * Time.deltaTime);
         }
@@ -315,7 +316,7 @@ public class plane_Move : MonoBehaviour
 
       
     
-        if (Permission_TO_Control == true)
+        if (Permission_TO_Control == true && Stop_values_Bool == false)
         {
             // float gyroInput = Input.gyro.rotationRate.x * Time.deltaTime;
             /* float gyroInput_y = Input.gyro.rotationRate.y * Time.deltaTime;*/
@@ -353,7 +354,7 @@ public class plane_Move : MonoBehaviour
         }
        
        
-        if (Permission_TO_Control == true)
+        if (Permission_TO_Control == true && Stop_values_Bool == false)
         {
             // float gyroInput = Input.gyro.rotationRate.x * Time.deltaTime;
             /* float gyroInput_y = Input.gyro.rotationRate.y * Time.deltaTime;*/
@@ -503,8 +504,7 @@ public class plane_Move : MonoBehaviour
             sideSpeed = 0f;
             transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y,0);
             transform.position = new UnityEngine.Vector3(transform.position.x, 21.75f, transform.position.z);
-            gyroInput_x = 0;
-            gyroInput_z = 0;
+          
             /*  Planes_Script_for_flying.translationInput = 0;*/
             /* Planes_Script_for_flying.mouseInput = 0;*/
             Propeller_Script.propeller_value = 0;

@@ -124,7 +124,7 @@ public class Fuel_Consumption : MonoBehaviour
 
     void Fuel_ON()
     {
-        if ( New_Fuel_Slider_GO.value  > 0 && Fuel_Indicator_BOOL && New_Fuel_Slider_GO.value <= 5f || New_Fuel_Slider_GO.value == 0.0100000f)
+        if ( New_Fuel_Slider_GO.value  > 0 && Fuel_Indicator_BOOL && New_Fuel_Slider_GO.value <= 5f || New_Fuel_Slider_GO.value == 0.01f)
         {
             Fuel_Background_as_Object.gameObject.SetActive(true);
             Fuel_Icon_as_Object.gameObject.SetActive(true);
