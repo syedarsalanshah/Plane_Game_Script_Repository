@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
+using System.Xml;
+
 public class Network_Script : MonoBehaviour
 {
 
@@ -81,30 +83,18 @@ public class Network_Script : MonoBehaviour
             // Set the content type to indicate text/plain
             www.SetRequestHeader("Content-Type", "text/plain");
 
+           
+
+            Debug.Log("=======Yes Done, data sent");
+            string responseText = www.downloadHandler.text;
+          
+            Debug.Log("111111Yes Done, Pakitan sent" + responseText);
+
+
             // Send the web request
             yield return www.SendWebRequest();
-
+          
             // Check for errors
-            /* if (www.result != UnityWebRequest.Result.Success)
-             {
-                 Debug.LogError("Error sending data: " + www.error);
-             }
-             else
-             {
-                 // Data successfully sent to the API, now process the response
-                 // Parse the response JSON
-                 string responseText = www.downloadHandler.text;
-                 Dictionary<string, object> responseData = JsonUtility.FromJson<Dictionary<string, object>>(responseText);
-
-                 // Check if the request was accepted in the response
-                 if (responseData.ContainsKey("status") && responseData["status"].ToString() == "success")
-                 {
-                     Debug.Log("Data sent successfully! Request accepted.");
-                 }
-                 else
-                 {
-                     Debug.Log("Data sent successfully, but request was not accepted.");
-                 }*/
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("Error sending data: " + www.error);
@@ -113,38 +103,12 @@ public class Network_Script : MonoBehaviour
             {
                 // Data successfully sent to the API, now process the response
                 // Parse the response JSON
-                string responseText = www.downloadHandler.text;
-                Dictionary<string, object> responseData = JsonUtility.FromJson<Dictionary<string, object>>(responseText);
-
-                // Check if the request was accepted in the response
-                if (responseData.ContainsKey("status") && responseData["status"].ToString() == "success")
-                {
-                    Debug.Log("Data sent successfully! Request accepted.");
-
-                    // Extract other data from the response
-                    if (responseData.ContainsKey("message"))
-                    {
-                        string message = responseData["message"].ToString();
-                        Debug.Log("Server response message: " + message);
-                    }
-
-                    // You can extract more data based on the server response structure
-                }
-                else
-                {
-                    Debug.Log("Data sent successfully, but request was not accepted.");
-
-                    // Extract error message from the response if applicable
-                    if (responseData.ContainsKey("error"))
-                    {
-                        string error = responseData["error"].ToString();
-                        Debug.Log("Server response error: " + error);
-                    }
-                }
-
+                Debug.Log("Yes Done, data sent");
+                string resText = www.downloadHandler.text;
+                Debug.Log("Yes Done, Pakitan sent" + resText);
 
             }
-                }
         }
     }
+}
 
