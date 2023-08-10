@@ -5,11 +5,12 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using System.Xml;
+using UnityEditor.PackageManager.Requests;
 
 public class Network_Script : MonoBehaviour
 {
 
-
+    
     public TMP_Dropdown dropdown;
     public TMP_InputField uname;
     public TMP_InputField userid;
@@ -63,8 +64,8 @@ public class Network_Script : MonoBehaviour
         uname_string = uname.text;
         userid_string = userid.text;
         email_string = email.text;
+      
 
-        
     }
 
     public void Ok_button()
@@ -103,12 +104,19 @@ public class Network_Script : MonoBehaviour
             {
                 // Data successfully sent to the API, now process the response
                 // Parse the response JSON
-                Debug.Log("Yes Done, data sent");
+               
                 string resText = www.downloadHandler.text;
-                Debug.Log("Yes Done, Pakitan sent" + resText);
 
+                ResponseData responseData = JsonUtility.FromJson<ResponseData>(www.downloadHandler.text);
+                Debug.Log("Response: " + responseData.message);
             }
         }
     }
+}
+
+public class ResponseData
+{
+    public string message;
+    // Add other fields from your JSON response here
 }
 

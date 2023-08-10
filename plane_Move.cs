@@ -8,6 +8,7 @@ using System.Numerics;
 using Quaternion = UnityEngine.Quaternion;
 using JetBrains.Annotations;
 using Slider = UnityEngine.UI.Slider;
+using Vector3 = UnityEngine.Vector3;
 
 public class plane_Move : MonoBehaviour
 {
@@ -186,7 +187,7 @@ public class plane_Move : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 90, 0);
            
         }
-       // translationInput = Input.GetAxis("Vertical");
+        // translationInput = Input.GetAxis("Vertical");
 
         /*---------------------if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -200,25 +201,25 @@ public class plane_Move : MonoBehaviour
         }*/
 
 
-        /* ----------------------------if (Input.GetKey(KeyCode.LeftArrow))
-         {
-             *//* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
-              transform.Rotate(Vector3.forward, tiltSpeed * Time.deltaTime);*//*
-             transform.Rotate(Vector3.right * tiltRotate_speed * Time.deltaTime);
-         }
-         else if (Input.GetKey(KeyCode.RightArrow))
-         {
-             transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
-         }
- */
-        /*        if (Input.GetKey(KeyCode.UpArrow))
-                {
-                    transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-                }*/
-        /*else if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Rotate(-(Vector3.forward), rotationSpeed * Time.deltaTime);
-        }*/
+            //transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+           transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+            transform.Rotate(Vector3.right * tiltRotate_speed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Rotate(-Vector3.right * tiltRotate_speed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.Rotate(Vector3.forward, 70 * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.Rotate(-(Vector3.forward), 70 * Time.deltaTime);
+        }
         /* if (Input.GetKey(KeyCode.W) && Fuel_taking.barr.gameObject.transform.localScale.x >= 0.50)
          {
              *//* transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
@@ -236,28 +237,28 @@ public class plane_Move : MonoBehaviour
 
         /* transform.Translate(Vector3.forward * translationInput * moveSpeed * Time.deltaTime);
          transform.Translate(Vector3.right * sideSpeed * Time.deltaTime);*/
-      //  print("Joystick Horizontal"+Joystick.Horizontal);
+        //  print("Joystick Horizontal"+Joystick.Horizontal);
 
         if (Permission_TO_Control == true)
         {
 
             if(Joystick.Horizontal >= -0.4  || Joystick.Horizontal <= 0.4)
             {
-                move_X = Joystick.Horizontal * 10 * Time.deltaTime;
+                move_X = Joystick.Horizontal * 15 * Time.deltaTime;
 
                 transform.Translate(0, 0, -move_X);
                 
             }
             else if(Joystick.Horizontal >= 0.5 && Joystick.Horizontal <= 0.75 || Joystick.Horizontal <= 0.5 && Joystick.Horizontal >= 0.75)
             {
-                move_X = Joystick.Horizontal * 25 * Time.deltaTime;
+                move_X = Joystick.Horizontal * 30 * Time.deltaTime;
 
                 transform.Translate(0, 0, -move_X);
 
             }
             else
             {
-                move_X = Joystick.Horizontal * 40 * Time.deltaTime;
+                move_X = Joystick.Horizontal * 45 * Time.deltaTime;
 
                 transform.Translate(0, 0, -move_X);
                 
