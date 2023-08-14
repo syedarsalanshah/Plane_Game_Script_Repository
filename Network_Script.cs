@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+//using UnityEngine.UI;
 using TMPro;
-using System.Xml;
-using UnityEditor.PackageManager.Requests;
+using Unity.VisualScripting;
+//using System.Xml;
+//using UnityEditor.PackageManager.Requests;
 
 public class Network_Script : MonoBehaviour
 {
+    public Text UserIDis;
+    [SerializeField] private string IsPlayer;
+    [SerializeField] private string IsNotPlayer;
+    public string Caretaker_of_Player;
+    public GameObject UserID_Alert;
+    public GameObject Password_Alert;
 
-    
     public TMP_Dropdown dropdown;
     public TMP_InputField uname;
     public TMP_InputField userid;
@@ -46,15 +53,26 @@ public class Network_Script : MonoBehaviour
 
     private string apiURL = "http://localhost:3000/createaccount";
 
+
+  
     // Sample data (replace with your actual data)
-  //  private string username = "Sir Abid";
-  //  private string email = "Sirabid@gmail.com";
+    //  private string username = "Sir Abid";
+    //  private string email = "Sirabid@gmail.com";
 
     void Start()
     {
+        Caretaker_of_Player = PlayerPrefs.GetString("UserIDPlayer_Pref", "");
+
+        if(Caretaker_of_Player.Length == 0)
+        {
+            Caretaker_of_Player = "No";
+            PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
+        }
+        
+        
         // ... (same as before)
 
-      
+
         dropdown.AddOptions(countries);
     }
 
@@ -64,37 +82,70 @@ public class Network_Script : MonoBehaviour
         uname_string = uname.text;
         userid_string = userid.text;
         email_string = email.text;
-      
-
+        UserIDis.text = Caretaker_of_Player;
+        print("Hello, MR "+UserIDis.text);
     }
 
     public void Ok_button()
     {
         StartCoroutine(SendDataToAPI());
+
+        /*kjsdfkljsdafjlksdf
+            sdgasg
+            asgda
+            gsdag
+            g
+            ag
+
+            ag
+            sadg
+            asdg
+            dsg
+            sdg
+            sdga
+            gs*/
+        //For testing Purpose only.
+
+        Caretaker_of_Player = userid_string;
+        PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
+
+        /*kjsdfkljsdafjlksdf
+       sdgasg
+       asgda
+       gsdag
+       g
+       ag
+
+       ag
+       sadg
+       asdg
+       dsg
+       sdg
+       sdga
+       gs*/
     }
 
     private IEnumerator SendDataToAPI()
     {
         // Create the data string in plain text format
-        string dataToSend = "username=" + userid_string +"&name=" + uname_string + "&email=" + email_string + "&country=" + selectedValue ;
-
+        string dataToSend = "username=" + userid_string + "&name=" + uname_string + "&email=" + email_string + "&country=" + selectedValue;
+       // string  dataToSend = "username=Shafeeq";
+      
         // Create a UnityWebRequest to send the data
-        using (UnityWebRequest www = UnityWebRequest.Post(apiURL, dataToSend))
+        Debug.Log("What are you sending: " + dataToSend);
+        using (UnityWebRequest www = UnityWebRequest.Post(apiURL,dataToSend))
         {
             // Set the content type to indicate text/plain
             www.SetRequestHeader("Content-Type", "text/plain");
 
-           
 
-            Debug.Log("=======Yes Done, data sent");
-            string responseText = www.downloadHandler.text;
-          
-            Debug.Log("111111Yes Done, Pakitan sent" + responseText);
+
+         
 
 
             // Send the web request
             yield return www.SendWebRequest();
-          
+
             // Check for errors
             if (www.result != UnityWebRequest.Result.Success)
             {
@@ -104,11 +155,23 @@ public class Network_Script : MonoBehaviour
             {
                 // Data successfully sent to the API, now process the response
                 // Parse the response JSON
-               
+
                 string resText = www.downloadHandler.text;
+                //Debug.Log(resText);
 
                 ResponseData responseData = JsonUtility.FromJson<ResponseData>(www.downloadHandler.text);
                 Debug.Log("Response: " + responseData.message);
+
+                if(responseData.message == "User created successfully")
+                {
+                    Caretaker_of_Player = userid_string;
+                    PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
+                    UserID_Alert.SetActive(false);
+                }
+                else
+                {
+                    UserID_Alert.SetActive(true);
+                }
             }
         }
     }

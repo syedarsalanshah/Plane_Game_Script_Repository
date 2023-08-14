@@ -13,9 +13,9 @@ public class Screen_UI_Script : MonoBehaviour
 
     public GameObject Text_as_Goal_GO;
     public GameObject Image_as_Goal_GO;
-   
 
 
+    public GameObject LeaderboardBar;
     public GameObject Circle1;
     public GameObject Circle2;
     public GameObject Circle3;
@@ -33,6 +33,7 @@ public class Screen_UI_Script : MonoBehaviour
     void Start()
 
     {
+        LeaderboardBar.SetActive(false);
 
         Pause_Menu.gameObject.SetActive(false);
         Time.timeScale = 1.0f;
@@ -158,6 +159,18 @@ public class Screen_UI_Script : MonoBehaviour
     public void Restart_Menu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void OpenGlobalLeaderboard()
+    {
+        LeaderboardBar.SetActive(true);
+        Winner_Menu.SetActive(false);
+    }
+
+    public void Back_toWinningMenu()
+    {
+        LeaderboardBar.SetActive(false);
+        Winner_Menu.SetActive(true);
     }
 
 }

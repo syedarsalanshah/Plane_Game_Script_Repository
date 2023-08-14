@@ -12,7 +12,10 @@ using Vector3 = UnityEngine.Vector3;
 
 public class plane_Move : MonoBehaviour
 {
-
+    public GameObject Check_Network_GO;
+    private Network_Script Networking_First_Script;
+    public GameObject Registration_bar;
+    public GameObject NotifyBar;
     private Quaternion initial_rotation;
     private float move_X;
     private bool Stop_values_Bool = false;
@@ -104,6 +107,9 @@ public class plane_Move : MonoBehaviour
 
     private void Start()
     {
+        Networking_First_Script = Check_Network_GO.GetComponent<Network_Script>();
+        Registration_bar.SetActive(false);
+        NotifyBar.SetActive(false);
         initial_rotation = transform.rotation;
        // InvokeRepeating("function_for_correction_rotation", 0, 5);
 
@@ -522,6 +528,11 @@ public class plane_Move : MonoBehaviour
         yield return new WaitForSecondsRealtime(5.0f);
         if (current_Score >= 100)
         {
+            if(Networking_First_Script.Caretaker_of_Player == "No" || Networking_First_Script.Caretaker_of_Player.Length == 0)
+            {
+                NotifyBar.SetActive(true);
+            }
+            
             Main_Screen_UI_Script.Winner_Menu_Function();
         }
 
@@ -535,6 +546,15 @@ public class plane_Move : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(2f);
         Main_Screen_UI_Script.Loser_Menu_Function();
+    }
+    public void CloseNotifybar()
+    {
+        NotifyBar.SetActive(false);
+    }
+    public void OpeningRegistrationbar()
+    {
+        Registration_bar.SetActive(true);
+        NotifyBar.SetActive(false);
     }
 
 

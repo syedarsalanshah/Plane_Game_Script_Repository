@@ -14,7 +14,7 @@ public class Compass_Rotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("Compass "+Artifical_Compass.transform.localEulerAngles.y);
+       // print("Compass "+Artifical_Compass.transform.localEulerAngles.y);
         transform.rotation = Quaternion.Euler(0,0,-Artifical_Compass.transform.localEulerAngles.y);
     }
 }
