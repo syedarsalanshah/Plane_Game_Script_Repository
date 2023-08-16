@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 //using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 //using System.Xml;
 //using UnityEditor.PackageManager.Requests;
 
@@ -83,7 +82,7 @@ public class Network_Script : MonoBehaviour
         userid_string = userid.text;
         email_string = email.text;
         UserIDis.text = Caretaker_of_Player;
-        print("Hello, MR "+UserIDis.text);
+       // print("Hello, MR "+UserIDis.text);
     }
 
     public void Ok_button()
@@ -157,7 +156,7 @@ public class Network_Script : MonoBehaviour
                 // Parse the response JSON
 
                 string resText = www.downloadHandler.text;
-                //Debug.Log(resText);
+              
 
                 ResponseData responseData = JsonUtility.FromJson<ResponseData>(www.downloadHandler.text);
                 Debug.Log("Response: " + responseData.message);

@@ -1,62 +1,94 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[Serializable]
+public class PlayerData
+{
+    public string country;
+    public string username;
+    public int score;
+}
+
+[Serializable]
+public class PlayerDataListWrapper
+{
+    public PlayerData[] players;
+}
+
 public class Leaderboard_world : MonoBehaviour
 {
+    public TextMeshProUGUI[] usernameTextArray;
+    public TextMeshProUGUI[] CountryTextArray;
+    public TextMeshProUGUI[] ScoreTextArray;
     private string World_apiURL = "http://localhost:3000/leaderboard/world";
-    // Start is called before the first frame update
-    void Start()
+
+    public void checking()
     {
-        
+        print("Hello, it is working");
     }
 
     public void clicked_function()
     {
-        SendDataToAPI();
+        StartCoroutine(WorldSendDataToAPI());
     }
-    // Update is called once per frame
-    private IEnumerator SendDataToAPI()
-    {
-      
 
-        // Create a UnityWebRequest to send the data
+
+    private void Update()
+    {
+      /*  DateTime currentDate = DateTime.Now;
+        Debug.Log("Current Date: " + currentDate.ToString("yyyy-MM-dd HH:mm:ss"));*/
+    }
+
+    private IEnumerator WorldSendDataToAPI()
+    {
         using (UnityWebRequest World_www = UnityWebRequest.Get(World_apiURL))
         {
-            // Set the content type to indicate text/plain
-            World_www.SetRequestHeader("Content-Type", "text/plain");
+            World_www.SetRequestHeader("Content-Type", "application/json");
 
-
-
-
-
-
-            // Send the web request
             yield return World_www.SendWebRequest();
 
-            // Check for errors
             if (World_www.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("Error sending data: " + World_www.error);
             }
             else
             {
-                // Data successfully sent to the API, now process the response
-                // Parse the response JSON
-
                 string resText = World_www.downloadHandler.text;
                 Debug.Log(resText);
 
-                // ResponseData responseData = JsonUtility.FromJson<ResponseData>( World_www.downloadHandler.text);
-                //  Debug.Log("Response: " + responseData.message);
+                // Deserialize the JSON response
+                PlayerDataListWrapper playerDataListWrapper = JsonUtility.FromJson<PlayerDataListWrapper>("{\"players\":" + resText + "}");
+
+                PlayerData[] players = playerDataListWrapper.players;
+
+
+
+                /* for(int i=0; i<=players.Length-1; i++)
+                 {
+                     PlayerData player = players[i];
+                     int playerIndex = i + 1;
+
+                     print(playerIndex + " " + player.username + " " + player.country + " " + player.score);
+                 }
+ */
+                for (int i = 0; i < players.Length; i++)
+                {
+                    PlayerData player = players[i];
+
+                    if (i < usernameTextArray.Length)
+                    {
+                        // Update the TextMeshPro component with the username
+                        usernameTextArray[i].text = $"{player.username}";
+                        CountryTextArray[i].text = $"{player.country}";
+                        print(player.country);
+                        ScoreTextArray[i].text = $"{player.score}";
+                    }
+                }
             }
         }
     }
-}
-
-public class WorldData
-{
-    public string message;
-    // Add other fields from your JSON response here
 }

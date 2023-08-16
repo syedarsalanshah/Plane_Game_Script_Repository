@@ -108,7 +108,7 @@ public class plane_Move : MonoBehaviour
     private void Start()
     {
         Networking_First_Script = Check_Network_GO.GetComponent<Network_Script>();
-        Registration_bar.SetActive(false);
+       // Registration_bar.SetActive(false);
         NotifyBar.SetActive(false);
         initial_rotation = transform.rotation;
        // InvokeRepeating("function_for_correction_rotation", 0, 5);

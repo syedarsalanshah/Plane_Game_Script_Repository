@@ -15,7 +15,7 @@ public class compas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("Minus location "+(To_GO.transform.position - From_GO.transform.position));
+      //  print("Minus location "+(To_GO.transform.position - From_GO.transform.position));
 
         Vector3 direction = From_GO.transform.position - To_GO.transform.position;
         transform.rotation  = Quaternion.LookRotation(direction,Vector3.up);

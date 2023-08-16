@@ -38,7 +38,7 @@ public class FuelBar_New_Script : MonoBehaviour
             New_Fuel_Slider_OB.fillRect.GetComponent<Image>().color = new Color(0.4f, 0.4f, 0.4f);
         }
 
-        print("Checking Collision value: "+Fuel_Collision_Checking);
+      //  print("Checking Collision value: "+Fuel_Collision_Checking);
         //print("propeller " + propeller_script.fuel_spill_value);
 
         if (propeller_script.fuel_spill_value == true)
