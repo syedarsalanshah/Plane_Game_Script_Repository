@@ -10,8 +10,8 @@ public class Timer_Script : MonoBehaviour
     private float timerDuration = 300f; // 5 minutes in seconds
     private float currentTimer;
     private bool isTimerActive = false;
-    [SerializeField] private int minutes;
-    [SerializeField] private int seconds;
+    public int minutes;
+    public int seconds;
     public GameObject wings_GO;
     private propeller_rotation Propeller_Script;
     private plane_Move Plane_Script;
@@ -55,6 +55,9 @@ public class Timer_Script : MonoBehaviour
         {
             print("Timer over");
         }
+
+
+       
     }
 
     void CountDownTimer()

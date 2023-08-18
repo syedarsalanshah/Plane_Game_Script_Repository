@@ -12,6 +12,10 @@ using Vector3 = UnityEngine.Vector3;
 
 public class plane_Move : MonoBehaviour
 {
+
+    
+    private Sending_Game_Data_Script Specific_UserData_Script;
+
     public GameObject Check_Network_GO;
     private Network_Script Networking_First_Script;
     public GameObject Registration_bar;
@@ -107,8 +111,11 @@ public class plane_Move : MonoBehaviour
 
     private void Start()
     {
+
+        Specific_UserData_Script = Check_Network_GO.GetComponent<Sending_Game_Data_Script>();
+
         Networking_First_Script = Check_Network_GO.GetComponent<Network_Script>();
-       // Registration_bar.SetActive(false);
+        Registration_bar.SetActive(false);
         NotifyBar.SetActive(false);
         initial_rotation = transform.rotation;
        // InvokeRepeating("function_for_correction_rotation", 0, 5);
@@ -463,11 +470,13 @@ public class plane_Move : MonoBehaviour
             Spark1.Play();
             Spark2.Play();
             fall = true;
+          
 
         }
 
         if (collision.gameObject.CompareTag("Plane"))
         {
+           
             White_to_gray.SetFloat("_Metallic", 1f);
             Fire.Play();
             if (Fire_counter == 0)
@@ -516,6 +525,13 @@ public class plane_Move : MonoBehaviour
             /* Planes_Script_for_flying.mouseInput = 0;*/
             Propeller_Script.propeller_value = 0;
             StartCoroutine(ShowingResult_GUI());
+           
+
+            if (Networking_First_Script.Caretaker_of_Player != "No" && Networking_First_Script.Caretaker_of_Player.Length != 0)
+            {
+                Specific_UserData_Script.CalltoSendDataFun();
+
+            }
 
         }
 

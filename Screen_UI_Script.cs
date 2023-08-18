@@ -33,7 +33,7 @@ public class Screen_UI_Script : MonoBehaviour
     void Start()
 
     {
-        LeaderboardBar.SetActive(false);
+     //   LeaderboardBar.SetActive(false);
 
         Pause_Menu.gameObject.SetActive(false);
         Time.timeScale = 1.0f;

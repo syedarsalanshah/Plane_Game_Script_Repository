@@ -10,6 +10,10 @@ using TMPro;
 
 public class Network_Script : MonoBehaviour
 {
+
+
+
+
     public Text UserIDis;
     [SerializeField] private string IsPlayer;
     [SerializeField] private string IsNotPlayer;
@@ -45,7 +49,7 @@ public class Network_Script : MonoBehaviour
        "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia",
        "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland",
        "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago",
-       "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America",
+       "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "UK", "USA",
        "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
     };
 
@@ -108,20 +112,7 @@ public class Network_Script : MonoBehaviour
         Caretaker_of_Player = userid_string;
         PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
 
-        /*kjsdfkljsdafjlksdf
-       sdgasg
-       asgda
-       gsdag
-       g
-       ag
-
-       ag
-       sadg
-       asdg
-       dsg
-       sdg
-       sdga
-       gs*/
+        
     }
 
     private IEnumerator SendDataToAPI()
