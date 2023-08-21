@@ -50,7 +50,7 @@ public class Timer_Script : MonoBehaviour
         }
 
 
-        print(minutes + " " + seconds);
+      //  print(minutes + " " + seconds);
         if(minutes <= 0 &&  seconds <= 0)
         {
             print("Timer over");

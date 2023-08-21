@@ -7,23 +7,56 @@ public class Camera_Script : MonoBehaviour
     
     public GameObject Plane;
     public float followSpeed = 15f;
+    private Vector3 cameraOffset;
+    private Vector3 smoothedPosition;
     // Adjust this value to control the smoothness of camera movement
     // Start is called before the first frame update
+    private Timer_Script Time_Script;
+    public GameObject Canvas_GO;
+    private int value2;
     void Start()
     {
-      
+        Time_Script= Canvas_GO.GetComponent<Timer_Script>();
+     /*   InvokeRepeating("Camera", 0, 0.007f);*/
+    }
+    void Camera()
+    {
+      //  if (value2 >= 450)
+        //{
+     /*       Vector3 planeDistance = new Vector3(-8.20f, 1.28f, 0.26f);
+            cameraOffset = new Vector3(0f, 0f, 0f);
+            Vector3 desiredPosition = Plane.transform.position + Plane.transform.rotation * planeDistance;
+            smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * followSpeed);
+
+       */
+
+        /*  }
+          else
+          {
+              CancelInvoke("Camera");
+          }*/
+
     }
     private void LateUpdate()
     {
+        /* string value = Time_Script.minutes +""+Time_Script.seconds;
+         value2 = int.Parse(value);
+         print(value2);*/
+
+        /*   if(value2 < 450)
+           {
+
+           }*/
         Vector3 planeDistance = new Vector3(-8.20f, 1.28f, 0.26f);
-        Vector3 cameraOffset = new Vector3(0f, 0f, 0f);
+        cameraOffset = new Vector3(0f, 0f, 0f);
         Vector3 desiredPosition = Plane.transform.position + Plane.transform.rotation * planeDistance;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * followSpeed);
+        smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * followSpeed);
         transform.position = smoothedPosition + Plane.transform.rotation * cameraOffset;
         transform.LookAt(Plane.transform.position);
-
     }
+
    
+
     // Update is called once per frame
     void Update()
     {
@@ -42,7 +75,9 @@ public class Camera_Script : MonoBehaviour
 */
 
 
-       
+
+
 
     }
+ 
 }
