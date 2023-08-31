@@ -24,7 +24,7 @@ public class Network_Script : MonoBehaviour
     public static string Caretaker_of_Player;
     public GameObject UserID_Alert;
     public GameObject Password_Alert;
-
+    public GameObject IfactiveRegistration_Go;
     public TMP_Dropdown dropdown;
     public TMP_InputField uname;
     public TMP_InputField userid;
@@ -89,10 +89,14 @@ public class Network_Script : MonoBehaviour
    
     private void Update()
     {
-        selectedValue = dropdown.options[dropdown.value].text;
-        uname_string = uname.text;
-        userid_string = userid.text;
-        email_string = email.text;
+        if(IfactiveRegistration_Go.activeSelf == true)
+        {
+            selectedValue = dropdown.options[dropdown.value].text;
+            uname_string = uname.text;
+            userid_string = userid.text;
+            email_string = email.text;
+        }
+       
 
         
        // UserIDis.text = Caretaker_of_Player;

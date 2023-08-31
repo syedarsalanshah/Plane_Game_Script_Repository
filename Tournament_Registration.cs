@@ -24,6 +24,7 @@ public class Tournament_Registration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Network_Script.Caretaker_of_Player = PlayerPrefs.GetString("UserIDPlayer_Pref", "");
         LocalTourID = PlayerPrefs.GetString("LocalTourIDPlayer_Pref", "");
         GlobalTourID = PlayerPrefs.GetString("GlobalTourIDPlayer_Pref", "");
     }
