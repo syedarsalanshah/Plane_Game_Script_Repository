@@ -40,7 +40,7 @@ public class Sending_Game_Data_Script : MonoBehaviour
         DateTime currentDateTime = DateTime.Now;
         string CDateTime =  currentDateTime.ToString("yyyy-MM-dd HH:mm:ss");
 
-        string dataToSend = "username="+Networking_Script.Caretaker_of_Player+"&score="+Plane_Script.current_Score+"&DateTime="+CDateTime+ "&Level=1" + "&Timer =0" + Time_Script.minutes + ":" + Time_Script.seconds;
+        string dataToSend = "username="+ Network_Script.Caretaker_of_Player + "&score="+Plane_Script.current_Score+"&DateTime="+CDateTime+ "&Level=1" + "&Timer =0" + Time_Script.minutes + ":" + Time_Script.seconds;
 
 
         using (UnityWebRequest www = UnityWebRequest.Post(UserApi, dataToSend))
@@ -70,8 +70,8 @@ public class Sending_Game_Data_Script : MonoBehaviour
                 string resText = www.downloadHandler.text;
 
 
-                ResponseData responseData = JsonUtility.FromJson<ResponseData>(www.downloadHandler.text);
-                Debug.Log("Response: " + responseData.message);
+              //  ResponseData responseData = JsonUtility.FromJson<ResponseData>(www.downloadHandler.text);
+                //Debug.Log("Response: " + responseData.message);
 
 
             }

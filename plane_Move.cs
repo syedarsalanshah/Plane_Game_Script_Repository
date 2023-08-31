@@ -527,7 +527,7 @@ public class plane_Move : MonoBehaviour
             StartCoroutine(ShowingResult_GUI());
            
 
-            if (Networking_First_Script.Caretaker_of_Player != "No" && Networking_First_Script.Caretaker_of_Player.Length != 0)
+            if (Network_Script.Caretaker_of_Player != "No" && Network_Script.Caretaker_of_Player.Length != 0)
             {
                 Specific_UserData_Script.CalltoSendDataFun();
 
@@ -544,7 +544,7 @@ public class plane_Move : MonoBehaviour
         yield return new WaitForSecondsRealtime(5.0f);
         if (current_Score >= 100)
         {
-            if(Networking_First_Script.Caretaker_of_Player == "No" || Networking_First_Script.Caretaker_of_Player.Length == 0)
+            if(Network_Script.Caretaker_of_Player == "No" || Network_Script.Caretaker_of_Player.Length == 0)
             {
                 NotifyBar.SetActive(true);
             }

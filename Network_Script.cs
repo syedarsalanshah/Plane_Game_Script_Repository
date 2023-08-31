@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 //using UnityEngine.UI;
 using TMPro;
@@ -12,12 +13,15 @@ public class Network_Script : MonoBehaviour
 {
 
 
+    public GameObject Registration_GO_Scene0;
+    private Tournament_Registration Registration_Scriptscene0;
 
-
-    public Text UserIDis;
+    public static bool SceneMangerConnection;
+    private int indexSceneManager;
+    private Text UserIDis;
     [SerializeField] private string IsPlayer;
     [SerializeField] private string IsNotPlayer;
-    public string Caretaker_of_Player;
+    public static string Caretaker_of_Player;
     public GameObject UserID_Alert;
     public GameObject Password_Alert;
 
@@ -64,6 +68,9 @@ public class Network_Script : MonoBehaviour
 
     void Start()
     {
+        Registration_Scriptscene0 = Registration_GO_Scene0.GetComponent<Tournament_Registration>();
+        SceneMangerConnection = false;
+        indexSceneManager = SceneManager.GetActiveScene().buildIndex;
         Caretaker_of_Player = PlayerPrefs.GetString("UserIDPlayer_Pref", "");
 
         if(Caretaker_of_Player.Length == 0)
@@ -71,21 +78,24 @@ public class Network_Script : MonoBehaviour
             Caretaker_of_Player = "No";
             PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
         }
-        
-        
+     
+
         // ... (same as before)
 
 
         dropdown.AddOptions(countries);
     }
 
+   
     private void Update()
     {
         selectedValue = dropdown.options[dropdown.value].text;
         uname_string = uname.text;
         userid_string = userid.text;
         email_string = email.text;
-        UserIDis.text = Caretaker_of_Player;
+
+        
+       // UserIDis.text = Caretaker_of_Player;
        // print("Hello, MR "+UserIDis.text);
     }
 
@@ -109,8 +119,8 @@ public class Network_Script : MonoBehaviour
             gs*/
         //For testing Purpose only.
 
-        Caretaker_of_Player = userid_string;
-        PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
+      //  Caretaker_of_Player = userid_string;
+       // PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
 
         
     }
@@ -157,6 +167,11 @@ public class Network_Script : MonoBehaviour
                     Caretaker_of_Player = userid_string;
                     PlayerPrefs.SetString("UserIDPlayer_Pref", Caretaker_of_Player);
                     UserID_Alert.SetActive(false);
+
+                    if (indexSceneManager == 0)
+                    {
+                        Registration_Scriptscene0.AllowingtoTour();
+                    }
                 }
                 else
                 {
