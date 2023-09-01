@@ -51,44 +51,46 @@ public class Tournament_Registration : MonoBehaviour
 
     public void LocalCLickHereButtonfun()
     {
-        /* 
-         if(MessageAlert == true){
-           StayTuned_GO.setActive(true);
-        startcoroutine(TurnOff());
 
-         }
-        else{
-         if(nonLocalTourID == LocalTourID)
-         {
-             CurrentlyLocalRegisMessage_GO.SetActive(true);
-             startcoroutine(TurnOff());
-         }
-         else
-         {
-             LocalTourID = nonLocalTourID;
-             PlayerPrefs.SetString("LocalTourIDPlayer_Pref", LocalTourID);
-             CongratsLocalMessage_GO.SetActive(true);
-             startcoroutine(TurnOff());
+        if (MessageAlert == true)
+        {
+            StayTunedMessage_GO.SetActive(true);
+            StartCoroutine(TurnOff());
 
-         }
-        }*/
+        }
+        else
+        {
+            if (nonLocalTourID == LocalTourID)
+            {
+                CurrentlyLocalRegisMessage_GO.SetActive(true);
+                StartCoroutine(TurnOff());
+            }
+            else
+            {
+                LocalTourID = nonLocalTourID;
+                PlayerPrefs.SetString("LocalTourIDPlayer_Pref", LocalTourID);
+                CongratsLocalMessage_GO.SetActive(true);
+                StartCoroutine(TurnOff());
+
+            }
+        }
     }
 
     public void GlobalCLickHereButtonfun()
     {
-        /*if (nonGlobalTourID == GlobalTourID)
+        if (nonGlobalTourID == GlobalTourID)
         {
-              CurrentlyGlobalRegisMessage_GO.SetActive(true);
-             startcoroutine(TurnOff());
+            CurrentlyGlobalRegisMessage_GO.SetActive(true);
+            StartCoroutine(TurnOff());
         }
         else
         {
             GlobalTourID = nonGlobalTourID;
             PlayerPrefs.SetString("GlobalTourIDPlayer_Pref", GlobalTourID);
             CongratsGlobalMessage_GO.SetActive(true);
-             startcoroutine(TurnOff());
+            StartCoroutine(TurnOff());
 
-        }*/
+        }
     }
 
     IEnumerator TurnOff()

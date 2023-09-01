@@ -22,10 +22,12 @@ public class LeaderboardManager : MonoBehaviour
         }
         else
         {
-            Global_Leaderboard.SetActive(false);
+            Global_Leaderboard.SetActive(true);
             WorldLeaderboard_Script.clicked_function();
         }
     }
+
+   
 
     // Update is called once per frame
     void Update()
